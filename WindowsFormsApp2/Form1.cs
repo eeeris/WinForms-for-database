@@ -33,9 +33,11 @@ namespace TestTask
             var employees = Program.Database.GetTable<Data.Employee>();
 
 
-            var sortedEmployees = from i in employees where i.SecondName.StartsWith(textFilterSecondName.Text)
-                                  orderby i.SecondName
-                                  select i;
+            var sortedEmployees = from e in employees
+                                  where listSkills.SelectedItem == null|| e.Ps.Any(x => x.Skill == listSkills.SelectedItem)
+                                  where e.SecondName.StartsWith(textFilterSecondName.Text)
+                                  orderby e.SecondName
+                                  select e;
 
             foreach (var employee in sortedEmployees)
 
@@ -75,6 +77,10 @@ namespace TestTask
         private void textFilterSecondName_TextChanged(object sender, EventArgs e) => UpdateEmployeesList();
 
         private void textFilterSkillName_TextChanged(object sender, EventArgs e) => UpdateSkillsList();
+
+        private void listSkills_SelectedValueChanged(object sender, EventArgs e) => UpdateEmployeesList();
+
+        private void listEmployees_SelectedValueChanged(object sender, EventArgs e) => UpdateSkillsList();
 
         private void ButtonSkills_Click(object sender, EventArgs e)
         {

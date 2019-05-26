@@ -81,6 +81,7 @@
             this.listEmployee.Name = "listEmployee";
             this.listEmployee.Size = new System.Drawing.Size(244, 199);
             this.listEmployee.TabIndex = 2;
+            this.listEmployee.SelectedIndexChanged += new System.EventHandler(this.listEmployees_SelectedValueChanged);
             // 
             // ButtonSkills
             // 
@@ -102,6 +103,7 @@
             this.listSkills.Name = "listSkills";
             this.listSkills.Size = new System.Drawing.Size(201, 199);
             this.listSkills.TabIndex = 4;
+            this.listSkills.SelectedValueChanged += new System.EventHandler(this.listSkills_SelectedValueChanged);
             // 
             // textFilerSkillName
             // 
