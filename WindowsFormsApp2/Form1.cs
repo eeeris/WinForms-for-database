@@ -49,10 +49,22 @@ namespace TestTask
             listSkills.Items.Clear();
 
             var skills = Program.Database.GetTable<Data.Skill>();
-            var sortedSkills = from k in skills
-                               where k.SkillName.StartsWith(textFilerSkillName.Text)
-                               orderby k.SkillName
-                               select k;
+            //var employees = Program.Database.GetTable<Data.Employee>();
+            //var ps = Program.Database.GetTable<Data.Ps>();
+
+            var sortedSkills = from s in skills
+                               //from e in employees
+                               //from p in ps
+                               where listEmployee.SelectedItem == null || s.Ps.Any(x => x.Employee == listEmployee.SelectedItem)
+                               where s.SkillName.StartsWith(textFilerSkillName.Text)
+                               orderby s.SkillName
+                               select s;
+
+
+            //var sortedSkills1 = skills.
+            //    Where(s => listEmployee.SelectedItem == null || s.Ps.Any(x => x.Employee == listEmployee.SelectedItem)).
+            //    Where(s => s.SkillName.StartsWith(textFilerSkillName.Text)).
+            //    OrderBy(s => s.SkillName);
 
             foreach (var skill in sortedSkills)
             {
