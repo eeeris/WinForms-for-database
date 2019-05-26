@@ -1,0 +1,74 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace TestTask
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            UpdateEmployeesList();
+            UpdateSkillsList();
+
+        }
+
+
+
+        private void UpdateEmployeesList()
+        {
+            listEmployee.Items.Clear();
+
+            var employees = Program.Database.GetTable<Data.Employee>();
+
+
+            var sortedEmployees = from i in employees where i.SecondName.StartsWith(textFilterSecondName.Text)
+                                  orderby i.SecondName
+                                  select i;
+
+            foreach (var employee in sortedEmployees)
+
+            {
+                listEmployee.Items.Add(employee);
+            }
+        }
+
+        private void UpdateSkillsList()
+        {
+            listSkills.Items.Clear();
+
+            var skills = Program.Database.GetTable<Data.Skill>();
+            var sortedSkills = from k in skills
+                               where k.SkillName.StartsWith(textFilerSkillName.Text)
+                               orderby k.SkillName
+                               select k;
+
+            foreach (var skill in sortedSkills)
+            {
+                listSkills.Items.Add(skill);
+            }
+        }
+
+        private void textFilterSecondName_TextChanged(object sender, EventArgs e) => UpdateEmployeesList();
+
+        private void textFilterSkillName_TextChanged(object sender, EventArgs e) => UpdateSkillsList();
+
+        private void ButtonSkills_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+}
+
