@@ -15,7 +15,11 @@ namespace TestTask
         public Form1()
         {
             InitializeComponent();
+
         }
+
+
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -61,7 +65,7 @@ namespace TestTask
                                where s.SkillName.StartsWith(textFilerSkillName.Text)
                                orderby s.SkillName
                                select s;
-
+         
 
             //var sortedSkills1 = skills.
             //    Where(s => listEmployee.SelectedItem == null || s.Ps.Any(x => x.Employee == listEmployee.SelectedItem)).
@@ -72,6 +76,15 @@ namespace TestTask
             {
                 listSkills.Items.Add(skill);
             }
+        }
+
+
+        private void ButtonAddEmployee_Click(object sender, EventArgs e)
+        {
+
+            Form ifrm = new Form2();
+            ifrm.ShowDialog();
+
         }
 
         private void textFilterSecondName_TextChanged(object sender, EventArgs e) => UpdateEmployeesList();
@@ -86,6 +99,7 @@ namespace TestTask
         {
 
         }
+
     }
 
 }
