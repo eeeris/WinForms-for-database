@@ -78,14 +78,25 @@ namespace TestTask
             }
         }
 
-
+        
         private void ButtonAddEmployee_Click(object sender, EventArgs e)
         {
-
+            
             Form ifrm = new Form2();
             ifrm.ShowDialog();
 
         }
+        private void ButtonAddSkill_Click(object sender, EventArgs e)
+        {
+
+            Form ifrm = new Form3();
+            ifrm.ShowDialog();
+
+        }
+
+        //public Form2 form;
+
+        //public string FilterSecondName { get => textFilterSecondName.Text; set => textFilterSecondName.Text = value; }
 
         private void textFilterSecondName_TextChanged(object sender, EventArgs e) => UpdateEmployeesList();
 

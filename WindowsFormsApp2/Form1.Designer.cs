@@ -137,12 +137,13 @@
             this.buttonAddSkills.TabIndex = 6;
             this.buttonAddSkills.Text = "+";
             this.buttonAddSkills.UseVisualStyleBackColor = true;
+            this.buttonAddSkills.Click += new System.EventHandler(this.ButtonAddSkill_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(871, 383);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
