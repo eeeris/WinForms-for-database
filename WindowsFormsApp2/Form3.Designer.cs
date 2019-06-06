@@ -33,6 +33,7 @@
             this.labelAddEmployee = new System.Windows.Forms.Label();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.buttonNewEmployee = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -78,16 +79,26 @@
             this.buttonNewEmployee.UseVisualStyleBackColor = true;
             this.buttonNewEmployee.Click += new System.EventHandler(this.ButtonNewEmployee_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(335, 303);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(354, 317);
             this.Controls.Add(this.buttonNewEmployee);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.labelAddEmployee);
             this.Controls.Add(this.labelAddNewSkill);
             this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.groupBox1);
             this.Name = "Form3";
             this.Text = "Form3";
             this.ResumeLayout(false);
@@ -102,5 +113,6 @@
         private System.Windows.Forms.Label labelAddEmployee;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button buttonNewEmployee;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TutorialDB" Class="DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=ольга-пк;Initial Catalog=TutorialDB;Integrated Security=True" SettingsObjectName="TestTask.Properties.Settings" SettingsPropertyName="TutorialDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.employees" Member="employees">
+    <Type Name="employees">
+      <Column Name="employee_id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[first name]" Member="first_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[second name]" Member="second_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="position" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[education level]" Member="education_level" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[year of birth]" Member="year_of_birth" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[pasport number]" Member="pasport_number" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="[phone number]" Member="phone_number" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="mail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

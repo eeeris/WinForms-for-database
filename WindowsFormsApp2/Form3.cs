@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.Linq;
 
 namespace TestTask
 {
@@ -22,7 +23,10 @@ namespace TestTask
 
             Form ifrm = new Form2();
             ifrm.ShowDialog();
-
+            using (var db = new DataContext())
+            {
+                
+            }
         }
 
     }

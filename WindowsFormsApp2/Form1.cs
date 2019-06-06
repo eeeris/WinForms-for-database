@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using TestTask.Data;
+
 namespace TestTask
 {
     public partial class Form1 : Form
@@ -17,7 +19,6 @@ namespace TestTask
             InitializeComponent();
 
         }
-
 
 
 
@@ -49,6 +50,8 @@ namespace TestTask
                 listEmployee.Items.Add(employee);
             }
         }
+
+
 
         private void UpdateSkillsList()
         {
@@ -82,7 +85,10 @@ namespace TestTask
         private void ButtonAddEmployee_Click(object sender, EventArgs e)
         {
             
-            Form ifrm = new Form2();
+            var ifrm = new Form2();
+            ifrm.ChangingEmployee = listEmployee.SelectedItem as Employee;//тип изменен
+            if (ifrm.ChangingEmployee == null)
+                ifrm.ChangingEmployee = new Employee();
             ifrm.ShowDialog();
 
         }
@@ -94,9 +100,6 @@ namespace TestTask
 
         }
 
-        //public Form2 form;
-
-        //public string FilterSecondName { get => textFilterSecondName.Text; set => textFilterSecondName.Text = value; }
 
         private void textFilterSecondName_TextChanged(object sender, EventArgs e) => UpdateEmployeesList();
 
