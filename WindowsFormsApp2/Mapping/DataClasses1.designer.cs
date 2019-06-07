@@ -33,6 +33,12 @@ namespace TestTask.Mapping
     partial void Insertemployees(employees instance);
     partial void Updateemployees(employees instance);
     partial void Deleteemployees(employees instance);
+    partial void Insertps(ps instance);
+    partial void Updateps(ps instance);
+    partial void Deleteps(ps instance);
+    partial void Insertskills(skills instance);
+    partial void Updateskills(skills instance);
+    partial void Deleteskills(skills instance);
     #endregion
 		
 		public DataContext() : 
@@ -72,6 +78,22 @@ namespace TestTask.Mapping
 				return this.GetTable<employees>();
 			}
 		}
+		
+		public System.Data.Linq.Table<ps> ps
+		{
+			get
+			{
+				return this.GetTable<ps>();
+			}
+		}
+		
+		public System.Data.Linq.Table<skills> skills
+		{
+			get
+			{
+				return this.GetTable<skills>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.employees")]
@@ -100,6 +122,8 @@ namespace TestTask.Mapping
 		
 		private string _mail;
 		
+		private EntitySet<ps> _ps;
+		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -112,14 +136,14 @@ namespace TestTask.Mapping
     partial void Onsecond_nameChanged();
     partial void OnpositionChanging(string value);
     partial void OnpositionChanged();
-    partial void Oneducation_levelChanging(string value);
-    partial void Oneducation_levelChanged();
-    partial void Onyear_of_birthChanging(System.Nullable<System.DateTime> value);
-    partial void Onyear_of_birthChanged();
+    partial void OneducationChanging(string value);
+    partial void OneducationChanged();
+    partial void Ondate_of_birthChanging(System.Nullable<System.DateTime> value);
+    partial void Ondate_of_birthChanged();
     partial void OnaddressChanging(string value);
     partial void OnaddressChanged();
-    partial void Onpasport_numberChanging(System.Nullable<long> value);
-    partial void Onpasport_numberChanged();
+    partial void Onpassport_numberChanging(System.Nullable<long> value);
+    partial void Onpassport_numberChanged();
     partial void Onphone_numberChanging(System.Nullable<long> value);
     partial void Onphone_numberChanged();
     partial void OnmailChanging(string value);
@@ -128,6 +152,7 @@ namespace TestTask.Mapping
 		
 		public employees()
 		{
+			this._ps = new EntitySet<ps>(new Action<ps>(this.attach_ps), new Action<ps>(this.detach_ps));
 			OnCreated();
 		}
 		
@@ -211,8 +236,8 @@ namespace TestTask.Mapping
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[education level]", Storage="_education_level", DbType="VarChar(50)")]
-		public string education_level
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[education]", Storage="_education_level", DbType="VarChar(50)")]
+		public string education
 		{
 			get
 			{
@@ -222,17 +247,17 @@ namespace TestTask.Mapping
 			{
 				if ((this._education_level != value))
 				{
-					this.Oneducation_levelChanging(value);
+					this.OneducationChanging(value);
 					this.SendPropertyChanging();
 					this._education_level = value;
-					this.SendPropertyChanged("education_level");
-					this.Oneducation_levelChanged();
+					this.SendPropertyChanged("education");
+					this.OneducationChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[year of birth]", Storage="_year_of_birth", DbType="Date")]
-		public System.Nullable<System.DateTime> year_of_birth
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[date of birth]", Storage="_year_of_birth", DbType="Date")]
+		public System.Nullable<System.DateTime> date_of_birth
 		{
 			get
 			{
@@ -242,11 +267,11 @@ namespace TestTask.Mapping
 			{
 				if ((this._year_of_birth != value))
 				{
-					this.Onyear_of_birthChanging(value);
+					this.Ondate_of_birthChanging(value);
 					this.SendPropertyChanging();
 					this._year_of_birth = value;
-					this.SendPropertyChanged("year_of_birth");
-					this.Onyear_of_birthChanged();
+					this.SendPropertyChanged("date_of_birth");
+					this.Ondate_of_birthChanged();
 				}
 			}
 		}
@@ -271,8 +296,8 @@ namespace TestTask.Mapping
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[pasport number]", Storage="_pasport_number", DbType="BigInt")]
-		public System.Nullable<long> pasport_number
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[passport number]", Storage="_pasport_number", DbType="BigInt")]
+		public System.Nullable<long> passport_number
 		{
 			get
 			{
@@ -282,11 +307,11 @@ namespace TestTask.Mapping
 			{
 				if ((this._pasport_number != value))
 				{
-					this.Onpasport_numberChanging(value);
+					this.Onpassport_numberChanging(value);
 					this.SendPropertyChanging();
 					this._pasport_number = value;
-					this.SendPropertyChanged("pasport_number");
-					this.Onpasport_numberChanged();
+					this.SendPropertyChanged("passport_number");
+					this.Onpassport_numberChanged();
 				}
 			}
 		}
@@ -331,6 +356,19 @@ namespace TestTask.Mapping
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employees_ps", Storage="_ps", ThisKey="employee_id", OtherKey="person_id")]
+		public EntitySet<ps> ps
+		{
+			get
+			{
+				return this._ps;
+			}
+			set
+			{
+				this._ps.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -349,6 +387,324 @@ namespace TestTask.Mapping
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_ps(ps entity)
+		{
+			this.SendPropertyChanging();
+			entity.employees = this;
+		}
+		
+		private void detach_ps(ps entity)
+		{
+			this.SendPropertyChanging();
+			entity.employees = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ps")]
+	public partial class ps : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ps_id;
+		
+		private long _person_id;
+		
+		private long _skills_id;
+		
+		private EntityRef<skills> _skills;
+		
+		private EntityRef<employees> _employees;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onps_idChanging(long value);
+    partial void Onps_idChanged();
+    partial void Onperson_idChanging(long value);
+    partial void Onperson_idChanged();
+    partial void Onskills_idChanging(long value);
+    partial void Onskills_idChanged();
+    #endregion
+		
+		public ps()
+		{
+			this._skills = default(EntityRef<skills>);
+			this._employees = default(EntityRef<employees>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ps_id", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long ps_id
+		{
+			get
+			{
+				return this._ps_id;
+			}
+			set
+			{
+				if ((this._ps_id != value))
+				{
+					this.Onps_idChanging(value);
+					this.SendPropertyChanging();
+					this._ps_id = value;
+					this.SendPropertyChanged("ps_id");
+					this.Onps_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_person_id", DbType="BigInt NOT NULL")]
+		public long person_id
+		{
+			get
+			{
+				return this._person_id;
+			}
+			set
+			{
+				if ((this._person_id != value))
+				{
+					if (this._employees.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onperson_idChanging(value);
+					this.SendPropertyChanging();
+					this._person_id = value;
+					this.SendPropertyChanged("person_id");
+					this.Onperson_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_skills_id", DbType="BigInt NOT NULL")]
+		public long skills_id
+		{
+			get
+			{
+				return this._skills_id;
+			}
+			set
+			{
+				if ((this._skills_id != value))
+				{
+					if (this._skills.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onskills_idChanging(value);
+					this.SendPropertyChanging();
+					this._skills_id = value;
+					this.SendPropertyChanged("skills_id");
+					this.Onskills_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="skills_ps", Storage="_skills", ThisKey="skills_id", OtherKey="skill_id", IsForeignKey=true)]
+		public skills skills
+		{
+			get
+			{
+				return this._skills.Entity;
+			}
+			set
+			{
+				skills previousValue = this._skills.Entity;
+				if (((previousValue != value) 
+							|| (this._skills.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._skills.Entity = null;
+						previousValue.ps.Remove(this);
+					}
+					this._skills.Entity = value;
+					if ((value != null))
+					{
+						value.ps.Add(this);
+						this._skills_id = value.skill_id;
+					}
+					else
+					{
+						this._skills_id = default(long);
+					}
+					this.SendPropertyChanged("skills");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employees_ps", Storage="_employees", ThisKey="person_id", OtherKey="employee_id", IsForeignKey=true)]
+		public employees employees
+		{
+			get
+			{
+				return this._employees.Entity;
+			}
+			set
+			{
+				employees previousValue = this._employees.Entity;
+				if (((previousValue != value) 
+							|| (this._employees.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._employees.Entity = null;
+						previousValue.ps.Remove(this);
+					}
+					this._employees.Entity = value;
+					if ((value != null))
+					{
+						value.ps.Add(this);
+						this._person_id = value.employee_id;
+					}
+					else
+					{
+						this._person_id = default(long);
+					}
+					this.SendPropertyChanged("employees");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.skills")]
+	public partial class skills : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _skill_id;
+		
+		private string _skill_name;
+		
+		private EntitySet<ps> _ps;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onskill_idChanging(long value);
+    partial void Onskill_idChanged();
+    partial void Onskill_nameChanging(string value);
+    partial void Onskill_nameChanged();
+    #endregion
+		
+		public skills()
+		{
+			this._ps = new EntitySet<ps>(new Action<ps>(this.attach_ps), new Action<ps>(this.detach_ps));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_skill_id", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long skill_id
+		{
+			get
+			{
+				return this._skill_id;
+			}
+			set
+			{
+				if ((this._skill_id != value))
+				{
+					this.Onskill_idChanging(value);
+					this.SendPropertyChanging();
+					this._skill_id = value;
+					this.SendPropertyChanged("skill_id");
+					this.Onskill_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_skill_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string skill_name
+		{
+			get
+			{
+				return this._skill_name;
+			}
+			set
+			{
+				if ((this._skill_name != value))
+				{
+					this.Onskill_nameChanging(value);
+					this.SendPropertyChanging();
+					this._skill_name = value;
+					this.SendPropertyChanged("skill_name");
+					this.Onskill_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="skills_ps", Storage="_ps", ThisKey="skill_id", OtherKey="skills_id")]
+		public EntitySet<ps> ps
+		{
+			get
+			{
+				return this._ps;
+			}
+			set
+			{
+				this._ps.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ps(ps entity)
+		{
+			this.SendPropertyChanging();
+			entity.skills = this;
+		}
+		
+		private void detach_ps(ps entity)
+		{
+			this.SendPropertyChanging();
+			entity.skills = null;
 		}
 	}
 }

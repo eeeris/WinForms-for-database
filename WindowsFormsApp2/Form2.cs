@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TestTask.Data;
+
 
 namespace TestTask
 {
@@ -23,21 +23,21 @@ namespace TestTask
         {
             checkedListBoxSkills.Items.Clear();
 
-            var skills = Program.Database.GetTable<Data.Skill>();
+            var skills = Program.Database.GetTable<Mapping.skills>();
 
 
             var sortedSkills = from s in skills
                                
-                               orderby s.SkillName
+                               orderby s.skill_name
                                select s;
 
 
             foreach (var skill in sortedSkills)
-                if (ChangingEmployee.SecondName == null)
+                if (ChangingEmployee.second_name == null)
                     checkedListBoxSkills = null;
                 else
                 {
-                bool isLinkedWithEmployee = ChangingEmployee.Ps.Any(x => x.Skill == skill);
+                bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skills == skill);
                 checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
                 }
         }
@@ -47,14 +47,14 @@ namespace TestTask
             UpdateUI();
         }
 
-        public Data.Employee ChangingEmployee
+        public TestTask.Mapping.employees ChangingEmployee
         {
             get; set;
         }
 
         private void UpdateUI()
         {
-            if (ChangingEmployee.SecondName == null)
+            if (ChangingEmployee.second_name == null)
             {
                 textSecondName.Text = null;
                 textFirstName.Text = null;
@@ -68,14 +68,14 @@ namespace TestTask
             }
             else
             {
-                textSecondName.Text = ChangingEmployee.SecondName;
-                textFirstName.Text = ChangingEmployee.FirstName;
-                textPosition.Text = ChangingEmployee.Position;
-                textEducation.Text = ChangingEmployee.Education;
+                textSecondName.Text = ChangingEmployee.second_name;
+                textFirstName.Text = ChangingEmployee.first_name;
+                textPosition.Text = ChangingEmployee.position;
+                textEducation.Text = ChangingEmployee.education;
 
-                if (ChangingEmployee.YearOfBirth.HasValue)
+                if (ChangingEmployee.date_of_birth.HasValue)
                 {
-                    dateOfBirth.Value = ChangingEmployee.YearOfBirth.Value;
+                    dateOfBirth.Value = ChangingEmployee.date_of_birth.Value;
                     dateOfBirth.Checked = true;
                 }
                 else
@@ -83,10 +83,10 @@ namespace TestTask
                     dateOfBirth.Checked = false;
                 }
 
-                textAddress.Text = ChangingEmployee.Address;
-                textPassportNumber.Text = ChangingEmployee.PassportNumber?.ToString();
-                textPhoneNumber.Text = ChangingEmployee.PhoneNumber?.ToString();
-                textMail.Text = ChangingEmployee.Mail;
+                textAddress.Text = ChangingEmployee.address;
+                textPassportNumber.Text = ChangingEmployee.passport_number?.ToString();
+                textPhoneNumber.Text = ChangingEmployee.phone_number?.ToString();
+                textMail.Text = ChangingEmployee.mail;
 
             }
         }
@@ -97,21 +97,21 @@ namespace TestTask
         {
 
 
-            ChangingEmployee.SecondName = textSecondName.Text;
-            ChangingEmployee.FirstName = textFirstName.Text;
-            ChangingEmployee.Position = textPosition.Text;
-            ChangingEmployee.Education = textEducation.Text;
-            ChangingEmployee.YearOfBirth = dateOfBirth.Value;
-            ChangingEmployee.Address = textAddress.Text;
-            ChangingEmployee.PassportNumber = Convert.ToInt64(textPassportNumber.Text);
-            ChangingEmployee.PhoneNumber = Convert.ToInt64(textPhoneNumber.Text);
-            ChangingEmployee.Mail = textMail.Text;
-            ChangingEmployee.Ps = new System.Data.Linq.EntitySet<Ps>();
+            ChangingEmployee.second_name = textSecondName.Text;
+            ChangingEmployee.first_name = textFirstName.Text;
+            ChangingEmployee.position = textPosition.Text;
+            ChangingEmployee.education = textEducation.Text;
+            ChangingEmployee.date_of_birth = dateOfBirth.Value;
+            ChangingEmployee.address = textAddress.Text;
+            ChangingEmployee.passport_number = Convert.ToInt64(textPassportNumber.Text);
+            ChangingEmployee.phone_number = Convert.ToInt64(textPhoneNumber.Text);
+            ChangingEmployee.mail = textMail.Text;
+            ChangingEmployee.ps = new System.Data.Linq.EntitySet<Mapping.ps>();
 
-            var employees = Program.Database.GetTable<Data.Employee>();
+            var employees = Program.Database.GetTable<Mapping.employees>();
 
 
-            if (ChangingEmployee.Id == 0)
+            if (ChangingEmployee.employee_id == 0)
             {
 
                 employees.InsertOnSubmit(ChangingEmployee);

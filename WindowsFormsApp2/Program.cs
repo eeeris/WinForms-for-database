@@ -11,7 +11,7 @@ namespace TestTask
     {
         private static string connectionString = @"Data Source=ольга-пк;Initial Catalog=TutorialDB;Integrated Security=True";
 
-        public static DataContext Database { get; private set; }
+        public static TestTask.Mapping.DataContext Database { get; private set; }
 
         /// <summary>
         /// Главная точка входа для приложения.
@@ -19,7 +19,7 @@ namespace TestTask
         [STAThread]
         static void Main()
         {
-            Database = new DataContext(connectionString);
+            Database = new TestTask.Mapping.DataContext(connectionString);
             
 
             Application.EnableVisualStyles();

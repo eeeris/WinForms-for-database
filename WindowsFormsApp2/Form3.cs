@@ -23,7 +23,7 @@ namespace TestTask
 
             Form ifrm = new Form2();
             ifrm.ShowDialog();
-            using (var db = new DataContext())
+            //using (var db = new DataContext())
             {
                 
             }
