@@ -20,16 +20,16 @@ namespace TestTask.Data
         [Column(Name="position", CanBeNull = false)]
         public string Position { get; set; }
 
-        [Column(Name="education level", CanBeNull = true)] //TODO: переименовать поле в базе
+        [Column(Name="education", CanBeNull = true)] //TODO: переименовать поле в базе
         public string Education { get; set; }
 
-        [Column(Name = "year of birth", CanBeNull = true)]
-        public DateTime? YearOfBirth { get; set; }
+        [Column(Name = "date of birth", CanBeNull = true)]
+        public DateTime? DateOfBirth { get; set; }
     
         [Column(Name="address", CanBeNull = true)]
         public string Address { get; set; }
 
-        [Column(Name="pasport number", CanBeNull = true)] //TODO: переименовать поле в базе
+        [Column(Name="passport number", CanBeNull = true)] //TODO: переименовать поле в базе
         public long? PassportNumber { get; set; }
     
         [Column(Name="phone number", CanBeNull = true)]
