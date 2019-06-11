@@ -19,35 +19,36 @@ namespace TestTask
         }
 
 
+
         private void UpdateSkillsList()
         {
             checkedListBoxSkills.Items.Clear();
 
-            var skills = Program.Database.GetTable<Mapping.skills>();
-
-
-            var sortedSkills = from s in skills
-                               
+            var sortedSkills = from s in Program.Database.skill
                                orderby s.skill_name
                                select s;
 
 
             foreach (var skill in sortedSkills)
+            {
                 if (ChangingEmployee.second_name == null)
-                    checkedListBoxSkills = null;
+                    checkedListBoxSkills.Items.Add(skill);
                 else
                 {
-                bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skills == skill);
-                checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
+                    bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
+                    checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
                 }
+            }
+
         }
+
         private void Form2_Load(object sender, EventArgs e)
         {
             UpdateSkillsList();
             UpdateUI();
         }
 
-        public TestTask.Mapping.employees ChangingEmployee
+        public TestTask.Mapping.employee ChangingEmployee
         {
             get; set;
         }
@@ -75,8 +76,10 @@ namespace TestTask
 
                 if (ChangingEmployee.date_of_birth.HasValue)
                 {
-                    dateOfBirth.Value = ChangingEmployee.date_of_birth.Value;
-                    dateOfBirth.Checked = true;
+                    try
+                        { dateOfBirth.Value = ChangingEmployee.date_of_birth.Value;
+                        dateOfBirth.Checked = true; }
+                    catch { }
                 }
                 else
                 {
@@ -87,6 +90,8 @@ namespace TestTask
                 textPassportNumber.Text = ChangingEmployee.passport_number?.ToString();
                 textPhoneNumber.Text = ChangingEmployee.phone_number?.ToString();
                 textMail.Text = ChangingEmployee.mail;
+                
+                
 
             }
         }
@@ -103,12 +108,21 @@ namespace TestTask
             ChangingEmployee.education = textEducation.Text;
             ChangingEmployee.date_of_birth = dateOfBirth.Value;
             ChangingEmployee.address = textAddress.Text;
-            ChangingEmployee.passport_number = Convert.ToInt64(textPassportNumber.Text);
-            ChangingEmployee.phone_number = Convert.ToInt64(textPhoneNumber.Text);
+
+            try
+            { ChangingEmployee.passport_number = Convert.ToInt64(textPassportNumber.Text); }
+            catch
+            { ChangingEmployee.passport_number = null; }
+
+            try
+            { ChangingEmployee.phone_number = Convert.ToInt64(textPhoneNumber.Text); }
+            catch
+            { ChangingEmployee.phone_number = null; }
+
             ChangingEmployee.mail = textMail.Text;
             ChangingEmployee.ps = new System.Data.Linq.EntitySet<Mapping.ps>();
 
-            var employees = Program.Database.GetTable<Mapping.employees>();
+            var employees = Program.Database.employee;
 
 
             if (ChangingEmployee.employee_id == 0)
@@ -120,13 +134,43 @@ namespace TestTask
                 
              }
 
+
+
+            for (int i = 0; i < checkedListBoxSkills.Items.Count; i++)
+            {
+                var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
+
+                bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
+
+                if (checkedListBoxSkills.GetItemChecked(i) == true && isLinkedWithEmployee == false)
+                {
+                    var ps = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
+
+
+                    Program.Database.ps.InsertOnSubmit(ps);
+                    Program.Database.SubmitChanges();
+                }
+
+
+            }
+                    
+
+
+
+
+
+
             Close();
+            
+
 
 
         }
 
-        
-        
+
+
+
+
         private void ButtonAddSkill_Click(object sender, EventArgs e)
         {
 

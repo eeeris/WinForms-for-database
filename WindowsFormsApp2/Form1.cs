@@ -33,12 +33,12 @@ namespace TestTask
         {
             listEmployee.Items.Clear();
 
-            var employees = Program.Database.employees;
+            var employees = Program.Database.employee;
                 //var employees = Program.Database.GetTable<Data.Employee>();
 
 
             var sortedEmployees = from e in employees
-                                  where listSkills.SelectedItem == null|| e.ps.Any(x => x.skills == listSkills.SelectedItem)
+                                  where listSkills.SelectedItem == null|| e.ps.Any(x => x.skill == listSkills.SelectedItem)
                                   where e.second_name.StartsWith(textFilterSecondName.Text)
                                   orderby e.second_name
                                   select e;
@@ -56,7 +56,7 @@ namespace TestTask
         {
             listSkills.Items.Clear();
 
-            var skills = Program.Database.skills;
+            var skills = Program.Database.skill;
                 //Program.Database.GetTable<Data.Skill>();
 
             //var employees = Program.Database.GetTable<Data.Employee>();
@@ -65,7 +65,7 @@ namespace TestTask
             var sortedSkills = from s in skills
                                //from e in employees
                                //from p in ps
-                               where listEmployee.SelectedItem == null || s.ps.Any(x => x.employees == listEmployee.SelectedItem)
+                               where listEmployee.SelectedItem == null || s.ps.Any(x => x.employee == listEmployee.SelectedItem)
                                where s.skill_name.StartsWith(textFilerSkillName.Text)
                                orderby s.skill_name
                                select s;
@@ -87,10 +87,15 @@ namespace TestTask
         {
             
             var ifrm = new Form2();
-            ifrm.ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employees;//тип изменен
+            ifrm.ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;//тип изменен
             if (ifrm.ChangingEmployee == null)
-                ifrm.ChangingEmployee = new TestTask.Mapping.employees();
+                ifrm.ChangingEmployee = new TestTask.Mapping.employee();
             ifrm.ShowDialog();
+            UpdateEmployeesList();
+            UpdateSkillsList();
+
+
+
 
         }
         private void ButtonAddSkill_Click(object sender, EventArgs e)
@@ -101,7 +106,7 @@ namespace TestTask
 
         }
 
-
+        
         private void textFilterSecondName_TextChanged(object sender, EventArgs e) => UpdateEmployeesList();
 
         private void textFilterSkillName_TextChanged(object sender, EventArgs e) => UpdateSkillsList();

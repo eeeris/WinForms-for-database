@@ -30,15 +30,15 @@ namespace TestTask.Mapping
 		
     #region Определения метода расширяемости
     partial void OnCreated();
-    partial void Insertemployees(employees instance);
-    partial void Updateemployees(employees instance);
-    partial void Deleteemployees(employees instance);
+    partial void Insertskill(skill instance);
+    partial void Updateskill(skill instance);
+    partial void Deleteskill(skill instance);
+    partial void Insertemployee(employee instance);
+    partial void Updateemployee(employee instance);
+    partial void Deleteemployee(employee instance);
     partial void Insertps(ps instance);
     partial void Updateps(ps instance);
     partial void Deleteps(ps instance);
-    partial void Insertskills(skills instance);
-    partial void Updateskills(skills instance);
-    partial void Deleteskills(skills instance);
     #endregion
 		
 		public DataContext() : 
@@ -71,11 +71,19 @@ namespace TestTask.Mapping
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<employees> employees
+		public System.Data.Linq.Table<skill> skill
 		{
 			get
 			{
-				return this.GetTable<employees>();
+				return this.GetTable<skill>();
+			}
+		}
+		
+		public System.Data.Linq.Table<employee> employee
+		{
+			get
+			{
+				return this.GetTable<employee>();
 			}
 		}
 		
@@ -86,18 +94,124 @@ namespace TestTask.Mapping
 				return this.GetTable<ps>();
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.skills")]
+	public partial class skill : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		public System.Data.Linq.Table<skills> skills
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _skill_id;
+		
+		private string _skill_name;
+		
+		private EntitySet<ps> _ps;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onskill_idChanging(long value);
+    partial void Onskill_idChanged();
+    partial void Onskill_nameChanging(string value);
+    partial void Onskill_nameChanged();
+    #endregion
+		
+		public skill()
+		{
+			this._ps = new EntitySet<ps>(new Action<ps>(this.attach_ps), new Action<ps>(this.detach_ps));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_skill_id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long skill_id
 		{
 			get
 			{
-				return this.GetTable<skills>();
+				return this._skill_id;
 			}
+			set
+			{
+				if ((this._skill_id != value))
+				{
+					this.Onskill_idChanging(value);
+					this.SendPropertyChanging();
+					this._skill_id = value;
+					this.SendPropertyChanged("skill_id");
+					this.Onskill_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_skill_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string skill_name
+		{
+			get
+			{
+				return this._skill_name;
+			}
+			set
+			{
+				if ((this._skill_name != value))
+				{
+					this.Onskill_nameChanging(value);
+					this.SendPropertyChanging();
+					this._skill_name = value;
+					this.SendPropertyChanged("skill_name");
+					this.Onskill_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="skill_ps", Storage="_ps", ThisKey="skill_id", OtherKey="skills_id")]
+		public EntitySet<ps> ps
+		{
+			get
+			{
+				return this._ps;
+			}
+			set
+			{
+				this._ps.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ps(ps entity)
+		{
+			this.SendPropertyChanging();
+			entity.skill = this;
+		}
+		
+		private void detach_ps(ps entity)
+		{
+			this.SendPropertyChanging();
+			entity.skill = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.employees")]
-	public partial class employees : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class employee : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -110,13 +224,13 @@ namespace TestTask.Mapping
 		
 		private string _position;
 		
-		private string _education_level;
+		private string _education;
 		
-		private System.Nullable<System.DateTime> _year_of_birth;
+		private System.Nullable<System.DateTime> _date_of_birth;
 		
 		private string _address;
 		
-		private System.Nullable<long> _pasport_number;
+		private System.Nullable<long> _passport_number;
 		
 		private System.Nullable<long> _phone_number;
 		
@@ -150,7 +264,7 @@ namespace TestTask.Mapping
     partial void OnmailChanged();
     #endregion
 		
-		public employees()
+		public employee()
 		{
 			this._ps = new EntitySet<ps>(new Action<ps>(this.attach_ps), new Action<ps>(this.detach_ps));
 			OnCreated();
@@ -236,40 +350,40 @@ namespace TestTask.Mapping
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[education]", Storage="_education_level", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_education", DbType="VarChar(50)")]
 		public string education
 		{
 			get
 			{
-				return this._education_level;
+				return this._education;
 			}
 			set
 			{
-				if ((this._education_level != value))
+				if ((this._education != value))
 				{
 					this.OneducationChanging(value);
 					this.SendPropertyChanging();
-					this._education_level = value;
+					this._education = value;
 					this.SendPropertyChanged("education");
 					this.OneducationChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[date of birth]", Storage="_year_of_birth", DbType="Date")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[date of birth]", Storage="_date_of_birth", DbType="Date")]
 		public System.Nullable<System.DateTime> date_of_birth
 		{
 			get
 			{
-				return this._year_of_birth;
+				return this._date_of_birth;
 			}
 			set
 			{
-				if ((this._year_of_birth != value))
+				if ((this._date_of_birth != value))
 				{
 					this.Ondate_of_birthChanging(value);
 					this.SendPropertyChanging();
-					this._year_of_birth = value;
+					this._date_of_birth = value;
 					this.SendPropertyChanged("date_of_birth");
 					this.Ondate_of_birthChanged();
 				}
@@ -296,20 +410,20 @@ namespace TestTask.Mapping
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[passport number]", Storage="_pasport_number", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[passport number]", Storage="_passport_number", DbType="BigInt")]
 		public System.Nullable<long> passport_number
 		{
 			get
 			{
-				return this._pasport_number;
+				return this._passport_number;
 			}
 			set
 			{
-				if ((this._pasport_number != value))
+				if ((this._passport_number != value))
 				{
 					this.Onpassport_numberChanging(value);
 					this.SendPropertyChanging();
-					this._pasport_number = value;
+					this._passport_number = value;
 					this.SendPropertyChanged("passport_number");
 					this.Onpassport_numberChanged();
 				}
@@ -356,7 +470,7 @@ namespace TestTask.Mapping
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employees_ps", Storage="_ps", ThisKey="employee_id", OtherKey="person_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employee_ps", Storage="_ps", ThisKey="employee_id", OtherKey="person_id")]
 		public EntitySet<ps> ps
 		{
 			get
@@ -392,13 +506,13 @@ namespace TestTask.Mapping
 		private void attach_ps(ps entity)
 		{
 			this.SendPropertyChanging();
-			entity.employees = this;
+			entity.employee = this;
 		}
 		
 		private void detach_ps(ps entity)
 		{
 			this.SendPropertyChanging();
-			entity.employees = null;
+			entity.employee = null;
 		}
 	}
 	
@@ -414,9 +528,9 @@ namespace TestTask.Mapping
 		
 		private long _skills_id;
 		
-		private EntityRef<skills> _skills;
+		private EntityRef<employee> _employee;
 		
-		private EntityRef<employees> _employees;
+		private EntityRef<skill> _skill;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -432,12 +546,12 @@ namespace TestTask.Mapping
 		
 		public ps()
 		{
-			this._skills = default(EntityRef<skills>);
-			this._employees = default(EntityRef<employees>);
+			this._employee = default(EntityRef<employee>);
+			this._skill = default(EntityRef<skill>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ps_id", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ps_id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ps_id
 		{
 			get
@@ -468,7 +582,7 @@ namespace TestTask.Mapping
 			{
 				if ((this._person_id != value))
 				{
-					if (this._employees.HasLoadedOrAssignedValue)
+					if (this._employee.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -492,7 +606,7 @@ namespace TestTask.Mapping
 			{
 				if ((this._skills_id != value))
 				{
-					if (this._skills.HasLoadedOrAssignedValue)
+					if (this._skill.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -505,60 +619,26 @@ namespace TestTask.Mapping
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="skills_ps", Storage="_skills", ThisKey="skills_id", OtherKey="skill_id", IsForeignKey=true)]
-		public skills skills
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employee_ps", Storage="_employee", ThisKey="person_id", OtherKey="employee_id", IsForeignKey=true)]
+		public employee employee
 		{
 			get
 			{
-				return this._skills.Entity;
+				return this._employee.Entity;
 			}
 			set
 			{
-				skills previousValue = this._skills.Entity;
+				employee previousValue = this._employee.Entity;
 				if (((previousValue != value) 
-							|| (this._skills.HasLoadedOrAssignedValue == false)))
+							|| (this._employee.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._skills.Entity = null;
+						this._employee.Entity = null;
 						previousValue.ps.Remove(this);
 					}
-					this._skills.Entity = value;
-					if ((value != null))
-					{
-						value.ps.Add(this);
-						this._skills_id = value.skill_id;
-					}
-					else
-					{
-						this._skills_id = default(long);
-					}
-					this.SendPropertyChanged("skills");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employees_ps", Storage="_employees", ThisKey="person_id", OtherKey="employee_id", IsForeignKey=true)]
-		public employees employees
-		{
-			get
-			{
-				return this._employees.Entity;
-			}
-			set
-			{
-				employees previousValue = this._employees.Entity;
-				if (((previousValue != value) 
-							|| (this._employees.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._employees.Entity = null;
-						previousValue.ps.Remove(this);
-					}
-					this._employees.Entity = value;
+					this._employee.Entity = value;
 					if ((value != null))
 					{
 						value.ps.Add(this);
@@ -568,7 +648,41 @@ namespace TestTask.Mapping
 					{
 						this._person_id = default(long);
 					}
-					this.SendPropertyChanged("employees");
+					this.SendPropertyChanged("employee");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="skill_ps", Storage="_skill", ThisKey="skills_id", OtherKey="skill_id", IsForeignKey=true)]
+		public skill skill
+		{
+			get
+			{
+				return this._skill.Entity;
+			}
+			set
+			{
+				skill previousValue = this._skill.Entity;
+				if (((previousValue != value) 
+							|| (this._skill.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._skill.Entity = null;
+						previousValue.ps.Remove(this);
+					}
+					this._skill.Entity = value;
+					if ((value != null))
+					{
+						value.ps.Add(this);
+						this._skills_id = value.skill_id;
+					}
+					else
+					{
+						this._skills_id = default(long);
+					}
+					this.SendPropertyChanged("skill");
 				}
 			}
 		}
@@ -591,120 +705,6 @@ namespace TestTask.Mapping
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.skills")]
-	public partial class skills : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _skill_id;
-		
-		private string _skill_name;
-		
-		private EntitySet<ps> _ps;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onskill_idChanging(long value);
-    partial void Onskill_idChanged();
-    partial void Onskill_nameChanging(string value);
-    partial void Onskill_nameChanged();
-    #endregion
-		
-		public skills()
-		{
-			this._ps = new EntitySet<ps>(new Action<ps>(this.attach_ps), new Action<ps>(this.detach_ps));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_skill_id", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long skill_id
-		{
-			get
-			{
-				return this._skill_id;
-			}
-			set
-			{
-				if ((this._skill_id != value))
-				{
-					this.Onskill_idChanging(value);
-					this.SendPropertyChanging();
-					this._skill_id = value;
-					this.SendPropertyChanged("skill_id");
-					this.Onskill_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_skill_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string skill_name
-		{
-			get
-			{
-				return this._skill_name;
-			}
-			set
-			{
-				if ((this._skill_name != value))
-				{
-					this.Onskill_nameChanging(value);
-					this.SendPropertyChanging();
-					this._skill_name = value;
-					this.SendPropertyChanged("skill_name");
-					this.Onskill_nameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="skills_ps", Storage="_ps", ThisKey="skill_id", OtherKey="skills_id")]
-		public EntitySet<ps> ps
-		{
-			get
-			{
-				return this._ps;
-			}
-			set
-			{
-				this._ps.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_ps(ps entity)
-		{
-			this.SendPropertyChanging();
-			entity.skills = this;
-		}
-		
-		private void detach_ps(ps entity)
-		{
-			this.SendPropertyChanging();
-			entity.skills = null;
 		}
 	}
 }

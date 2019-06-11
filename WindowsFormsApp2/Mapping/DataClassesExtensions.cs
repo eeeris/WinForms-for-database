@@ -1,6 +1,6 @@
 ﻿namespace TestTask.Mapping
 {
-    public partial class employees
+    public partial class employee
     {
         public override string ToString()
         {
@@ -9,9 +9,13 @@
         }
     }
 
-    public partial class skills
+    public partial class skill
     {
         public override string ToString() => $"{skill_name}";
     }
 
+    public partial class ps
+    {
+        public override string ToString() => $"{employee?.ToString() ?? person_id.ToString()}<->{skill?.ToString() ?? skills_id.ToString()}";//$"{person_id}<->{skills_id}";
+    }
 }

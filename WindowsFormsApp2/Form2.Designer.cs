@@ -278,10 +278,13 @@
             this.dateOfBirth.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dateOfBirth.Location = new System.Drawing.Point(440, 125);
+            this.dateOfBirth.MaxDate = new System.DateTime(2019, 6, 10, 0, 0, 0, 0);
+            this.dateOfBirth.MinDate = new System.DateTime(1920, 1, 1, 0, 0, 0, 0);
             this.dateOfBirth.Name = "dateOfBirth";
             this.dateOfBirth.ShowCheckBox = true;
             this.dateOfBirth.Size = new System.Drawing.Size(219, 20);
             this.dateOfBirth.TabIndex = 7;
+            this.dateOfBirth.Value = new System.DateTime(2019, 6, 10, 0, 0, 0, 0);
             // 
             // label
             // 
