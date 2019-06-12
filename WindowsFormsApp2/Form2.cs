@@ -146,14 +146,17 @@ namespace TestTask
                 {
                     var ps = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
 
+                    //Или оно должно само обновиться?
+                    ChangingEmployee.ps.Add(ps);
+                    skill.ps.Add(ps);
 
                     Program.Database.ps.InsertOnSubmit(ps);
-                    Program.Database.SubmitChanges();
-                }
-
-
-            }
                     
+                }
+            }
+
+            Program.Database.SubmitChanges();
+
 
 
 
