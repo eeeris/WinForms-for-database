@@ -38,6 +38,9 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonAddSkills = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.buttonDeleteEmployee = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -52,7 +55,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textFilterSecondName.Location = new System.Drawing.Point(42, 56);
             this.textFilterSecondName.Name = "textFilterSecondName";
-            this.textFilterSecondName.Size = new System.Drawing.Size(146, 20);
+            this.textFilterSecondName.Size = new System.Drawing.Size(201, 20);
             this.textFilterSecondName.TabIndex = 0;
             this.textFilterSecondName.TextChanged += new System.EventHandler(this.textFilterSecondName_TextChanged);
             // 
@@ -70,13 +73,16 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.linkLabel1);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.buttonDeleteEmployee);
             this.groupBox1.Controls.Add(this.buttonAddEmployee);
             this.groupBox1.Controls.Add(this.listEmployee);
             this.groupBox1.Controls.Add(this.textFilterSecondName);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(3, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(220, 304);
+            this.groupBox1.Size = new System.Drawing.Size(275, 309);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -84,9 +90,9 @@
             // buttonAddEmployee
             // 
             this.buttonAddEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddEmployee.Location = new System.Drawing.Point(109, 260);
+            this.buttonAddEmployee.Location = new System.Drawing.Point(182, 261);
             this.buttonAddEmployee.Name = "buttonAddEmployee";
-            this.buttonAddEmployee.Size = new System.Drawing.Size(80, 24);
+            this.buttonAddEmployee.Size = new System.Drawing.Size(62, 24);
             this.buttonAddEmployee.TabIndex = 3;
             this.buttonAddEmployee.Text = "+";
             this.buttonAddEmployee.UseVisualStyleBackColor = true;
@@ -100,9 +106,10 @@
             this.listEmployee.FormattingEnabled = true;
             this.listEmployee.Location = new System.Drawing.Point(42, 94);
             this.listEmployee.Name = "listEmployee";
-            this.listEmployee.Size = new System.Drawing.Size(146, 134);
+            this.listEmployee.Size = new System.Drawing.Size(201, 134);
             this.listEmployee.TabIndex = 2;
             this.listEmployee.SelectedIndexChanged += new System.EventHandler(this.listEmployees_SelectedValueChanged);
+            this.listEmployee.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listEmployee_MouseDoubleClick);
             // 
             // listSkills
             // 
@@ -112,7 +119,7 @@
             this.listSkills.FormattingEnabled = true;
             this.listSkills.Location = new System.Drawing.Point(21, 94);
             this.listSkills.Name = "listSkills";
-            this.listSkills.Size = new System.Drawing.Size(111, 134);
+            this.listSkills.Size = new System.Drawing.Size(163, 134);
             this.listSkills.TabIndex = 4;
             this.listSkills.SelectedValueChanged += new System.EventHandler(this.listSkills_SelectedValueChanged);
             // 
@@ -122,7 +129,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textFilerSkillName.Location = new System.Drawing.Point(21, 56);
             this.textFilerSkillName.Name = "textFilerSkillName";
-            this.textFilerSkillName.Size = new System.Drawing.Size(111, 20);
+            this.textFilerSkillName.Size = new System.Drawing.Size(163, 20);
             this.textFilerSkillName.TabIndex = 5;
             this.textFilerSkillName.TextChanged += new System.EventHandler(this.textFilterSkillName_TextChanged);
             // 
@@ -136,7 +143,7 @@
             this.groupBox2.Controls.Add(this.listSkills);
             this.groupBox2.Location = new System.Drawing.Point(3, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(157, 304);
+            this.groupBox2.Size = new System.Drawing.Size(209, 312);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
@@ -144,7 +151,7 @@
             // buttonAddSkills
             // 
             this.buttonAddSkills.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddSkills.Location = new System.Drawing.Point(54, 260);
+            this.buttonAddSkills.Location = new System.Drawing.Point(106, 268);
             this.buttonAddSkills.Name = "buttonAddSkills";
             this.buttonAddSkills.Size = new System.Drawing.Size(80, 24);
             this.buttonAddSkills.TabIndex = 6;
@@ -165,15 +172,48 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer1.Size = new System.Drawing.Size(389, 307);
-            this.splitContainer1.SplitterDistance = 222;
+            this.splitContainer1.Size = new System.Drawing.Size(496, 312);
+            this.splitContainer1.SplitterDistance = 277;
             this.splitContainer1.TabIndex = 7;
+            // 
+            // buttonDeleteEmployee
+            // 
+            this.buttonDeleteEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonDeleteEmployee.Location = new System.Drawing.Point(42, 260);
+            this.buttonDeleteEmployee.Name = "buttonDeleteEmployee";
+            this.buttonDeleteEmployee.Size = new System.Drawing.Size(61, 27);
+            this.buttonDeleteEmployee.TabIndex = 7;
+            this.buttonDeleteEmployee.Text = "удалить";
+            this.buttonDeleteEmployee.UseVisualStyleBackColor = true;
+            this.buttonDeleteEmployee.Click += new System.EventHandler(this.buttonDeleteEmployee_Click);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(158, 288);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(111, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Добавить/изменить";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel1.Location = new System.Drawing.Point(39, 231);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(215, 13);
+            this.linkLabel1.TabIndex = 9;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "*Двойной щелчок для снятия выделения";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 307);
+            this.ClientSize = new System.Drawing.Size(496, 312);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -203,6 +243,9 @@
         private System.Windows.Forms.Button buttonAddEmployee;
         private System.Windows.Forms.Button buttonAddSkills;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button buttonDeleteEmployee;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

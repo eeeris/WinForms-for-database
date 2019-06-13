@@ -106,7 +106,70 @@ namespace TestTask
 
         }
 
-        
+        private void buttonDeleteEmployee_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Все данные о сотруднике будут удалены. Удалить?",
+                "Удаление информации о сотруднике",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2,
+                MessageBoxOptions.DefaultDesktopOnly);
+
+            if (result == DialogResult.Yes)
+            {
+                
+                var ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;
+                
+
+
+                var emId = ChangingEmployee.employee_id;
+                Program.Database.employee.DeleteOnSubmit(ChangingEmployee);
+
+                var deleteSelectedPs = from ps in Program.Database.ps
+                                       where ps.person_id == emId
+                                       select ps;
+                //foreach (var ps in deleteSelectedPs)
+                //{
+                //    Program.Database.ps.DeleteOnSubmit(ps);
+                //}
+
+                Program.Database.ps.DeleteAllOnSubmit(deleteSelectedPs);
+
+
+
+
+
+                /*Program.Database.employee;
+            var sortedEmployees = from em in employees
+                                  select em.ps;*/
+
+                /*var deleteOrderDetails =
+    from details in db.OrderDetails
+    where details.OrderID == 11000
+    select details;
+
+foreach (var detail in deleteOrderDetails)
+{
+    db.OrderDetails.DeleteOnSubmit(detail);
+}
+
+                 */
+
+
+
+
+            }
+            Program.Database.SubmitChanges();
+            UpdateEmployeesList();
+            UpdateSkillsList();
+        }
+
+        private void listEmployee_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            listEmployee.SelectedItem = null;
+        }
+
         private void textFilterSecondName_TextChanged(object sender, EventArgs e) => UpdateEmployeesList();
 
         private void textFilterSkillName_TextChanged(object sender, EventArgs e) => UpdateSkillsList();
@@ -119,6 +182,7 @@ namespace TestTask
         {
 
         }
+
 
     }
 
