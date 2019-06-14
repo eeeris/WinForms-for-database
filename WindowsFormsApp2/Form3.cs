@@ -18,15 +18,77 @@ namespace TestTask
             InitializeComponent();
         }
 
+        private void Form3_Load(object sender, EventArgs e)
+        {
+            Update_checkedListBoxEmployee();
+        }
+
+
+
+        private void Update_checkedListBoxEmployee()
+        {
+            checkedListBoxEmployee.Items.Clear();
+
+            var sortedEmployees = from e in Program.Database.employee
+                                  orderby e.second_name
+                                  select e;
+
+            foreach (var employees in sortedEmployees)
+            {
+                checkedListBoxEmployee.Items.Add(employees);
+            }
+
+
+        }
+
+        public TestTask.Mapping.skill addNewSkill
+        {
+            get; set;
+        }
+
+
+
+        private void buttonAddSkill_Click(object sender, EventArgs e)
+        {
+            addNewSkill = new TestTask.Mapping.skill();
+            addNewSkill.skill_name = textBoxAddNewSkill.Text;
+            Program.Database.skill.InsertOnSubmit(addNewSkill);
+
+            for (int i = 0; i < checkedListBoxEmployee.Items.Count; i++)
+            {
+                var employee = checkedListBoxEmployee.Items[i] as Mapping.employee;
+
+                bool isLinkedWithEmployee = addNewSkill.ps.Any(x => x.employee == employee);
+
+                if (checkedListBoxEmployee.GetItemChecked(i) == true && isLinkedWithEmployee == false)
+                {
+                    var ps = new Mapping.ps { skills_id = addNewSkill.skill_id, person_id = employee.employee_id };
+
+                    addNewSkill.ps.Add(ps);
+                    employee.ps.Add(ps);
+
+                    Program.Database.ps.InsertOnSubmit(ps);
+
+                }
+            }
+
+            Program.Database.SubmitChanges();
+
+            
+            Close();
+
+
+            
+        }
+
         private void ButtonNewEmployee_Click(object sender, EventArgs e)
         {
 
             Form ifrm = new Form2();
             ifrm.ShowDialog();
+            Update_checkedListBoxEmployee();
             //using (var db = new DataContext())
-            {
-                
-            }
+            
         }
 
     }

@@ -28,20 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxAddNewSkill = new System.Windows.Forms.TextBox();
             this.labelAddNewSkill = new System.Windows.Forms.Label();
             this.labelAddEmployee = new System.Windows.Forms.Label();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxEmployee = new System.Windows.Forms.CheckedListBox();
             this.buttonNewEmployee = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonAddSkill = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox1
+            // textBoxAddNewSkill
             // 
-            this.textBox1.Location = new System.Drawing.Point(49, 65);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(163, 20);
-            this.textBox1.TabIndex = 0;
+            this.textBoxAddNewSkill.Location = new System.Drawing.Point(49, 65);
+            this.textBoxAddNewSkill.Name = "textBoxAddNewSkill";
+            this.textBoxAddNewSkill.Size = new System.Drawing.Size(163, 20);
+            this.textBoxAddNewSkill.TabIndex = 0;
             // 
             // labelAddNewSkill
             // 
@@ -61,13 +63,13 @@
             this.labelAddEmployee.TabIndex = 2;
             this.labelAddEmployee.Text = "сотрудники с этим навыком";
             // 
-            // checkedListBox1
+            // checkedListBoxEmployee
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(49, 164);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(163, 94);
-            this.checkedListBox1.TabIndex = 3;
+            this.checkedListBoxEmployee.FormattingEnabled = true;
+            this.checkedListBoxEmployee.Location = new System.Drawing.Point(49, 164);
+            this.checkedListBoxEmployee.Name = "checkedListBoxEmployee";
+            this.checkedListBoxEmployee.Size = new System.Drawing.Size(163, 94);
+            this.checkedListBoxEmployee.TabIndex = 3;
             // 
             // buttonNewEmployee
             // 
@@ -81,6 +83,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonAddSkill);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(335, 303);
@@ -88,19 +91,31 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
+            // buttonAddSkill
+            // 
+            this.buttonAddSkill.Location = new System.Drawing.Point(227, 50);
+            this.buttonAddSkill.Name = "buttonAddSkill";
+            this.buttonAddSkill.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddSkill.TabIndex = 0;
+            this.buttonAddSkill.Text = "добавить";
+            this.buttonAddSkill.UseVisualStyleBackColor = true;
+            this.buttonAddSkill.Click += new System.EventHandler(this.buttonAddSkill_Click);
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(354, 317);
             this.Controls.Add(this.buttonNewEmployee);
-            this.Controls.Add(this.checkedListBox1);
+            this.Controls.Add(this.checkedListBoxEmployee);
             this.Controls.Add(this.labelAddEmployee);
             this.Controls.Add(this.labelAddNewSkill);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxAddNewSkill);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form3";
             this.Text = "Form3";
+            this.Load += new System.EventHandler(this.Form3_Load);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -108,11 +123,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxAddNewSkill;
         private System.Windows.Forms.Label labelAddNewSkill;
         private System.Windows.Forms.Label labelAddEmployee;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox checkedListBoxEmployee;
         private System.Windows.Forms.Button buttonNewEmployee;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button buttonAddSkill;
     }
 }

@@ -41,6 +41,7 @@
             this.buttonDeleteEmployee = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.buttonDeleteSkill = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -122,6 +123,7 @@
             this.listSkills.Size = new System.Drawing.Size(163, 134);
             this.listSkills.TabIndex = 4;
             this.listSkills.SelectedValueChanged += new System.EventHandler(this.listSkills_SelectedValueChanged);
+            this.listSkills.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listSkills_MouseDoubleClick);
             // 
             // textFilerSkillName
             // 
@@ -138,6 +140,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.buttonDeleteSkill);
             this.groupBox2.Controls.Add(this.buttonAddSkills);
             this.groupBox2.Controls.Add(this.textFilerSkillName);
             this.groupBox2.Controls.Add(this.listSkills);
@@ -209,6 +212,16 @@
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "*Двойной щелчок для снятия выделения";
             // 
+            // buttonDeleteSkill
+            // 
+            this.buttonDeleteSkill.Location = new System.Drawing.Point(21, 268);
+            this.buttonDeleteSkill.Name = "buttonDeleteSkill";
+            this.buttonDeleteSkill.Size = new System.Drawing.Size(75, 23);
+            this.buttonDeleteSkill.TabIndex = 7;
+            this.buttonDeleteSkill.Text = "удалить";
+            this.buttonDeleteSkill.UseVisualStyleBackColor = true;
+            this.buttonDeleteSkill.Click += new System.EventHandler(this.buttonDeleteSkill_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -246,6 +259,7 @@
         private System.Windows.Forms.Button buttonDeleteEmployee;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonDeleteSkill;
     }
 }
 

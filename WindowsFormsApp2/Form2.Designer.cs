@@ -132,7 +132,6 @@
             this.checkedListBoxSkills.Name = "checkedListBoxSkills";
             this.checkedListBoxSkills.Size = new System.Drawing.Size(219, 109);
             this.checkedListBoxSkills.TabIndex = 5;
-            this.checkedListBoxSkills.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxSkills_ItemCheck);
             // 
             // labelPosition
             // 
@@ -303,11 +302,6 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.textSkills);
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
             this.splitContainer1.Size = new System.Drawing.Size(804, 488);
             this.splitContainer1.SplitterDistance = 400;
             this.splitContainer1.TabIndex = 26;
@@ -345,6 +339,7 @@
             this.Name = "Form2";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
+            this.Shown += new System.EventHandler(this.Form2_Shown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

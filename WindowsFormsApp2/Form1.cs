@@ -88,8 +88,7 @@ namespace TestTask
             
             var ifrm = new Form2();
             ifrm.ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;//тип изменен
-            if (ifrm.ChangingEmployee == null)
-                ifrm.ChangingEmployee = new TestTask.Mapping.employee();
+          
             ifrm.ShowDialog();
             UpdateEmployeesList();
             UpdateSkillsList();
@@ -103,6 +102,9 @@ namespace TestTask
 
             Form ifrm = new Form3();
             ifrm.ShowDialog();
+            UpdateEmployeesList();
+            UpdateSkillsList();
+
 
         }
 
@@ -139,36 +141,65 @@ namespace TestTask
 
 
 
-
-                /*Program.Database.employee;
-            var sortedEmployees = from em in employees
-                                  select em.ps;*/
-
-                /*var deleteOrderDetails =
-    from details in db.OrderDetails
-    where details.OrderID == 11000
-    select details;
-
-foreach (var detail in deleteOrderDetails)
-{
-    db.OrderDetails.DeleteOnSubmit(detail);
-}
-
-                 */
-
-
-
-
             }
             Program.Database.SubmitChanges();
             UpdateEmployeesList();
             UpdateSkillsList();
+            Focus();
         }
+
+
+
+        private void buttonDeleteSkill_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Все данные о навыке и владеющих им сотрудниках будут удалены. Удалить?",
+                "Удаление информации о навыке",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2,
+                MessageBoxOptions.DefaultDesktopOnly);
+
+            if (result == DialogResult.Yes)
+            {
+
+                var ChangingSkill = listSkills.SelectedItem as TestTask.Mapping.skill;
+
+
+
+                var skill_id = ChangingSkill.skill_id;//ссылка на об не указ на экз объекта (не выделен объект)
+                Program.Database.skill.DeleteOnSubmit(ChangingSkill);
+
+                var deleteSelectedPs = from ps in Program.Database.ps
+                                       where ps.skills_id == skill_id
+                                       select ps;
+
+
+                Program.Database.ps.DeleteAllOnSubmit(deleteSelectedPs);
+            }
+            Program.Database.SubmitChanges();
+            listSkills.SelectedItem = null;
+            UpdateEmployeesList();
+            UpdateSkillsList();
+            BringToFront();
+
+
+        }
+        
 
         private void listEmployee_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             listEmployee.SelectedItem = null;
         }
+
+        private void listSkills_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            listSkills.SelectedItem = null;
+        }
+
+
+
+
 
         private void textFilterSecondName_TextChanged(object sender, EventArgs e) => UpdateEmployeesList();
 
@@ -183,7 +214,7 @@ foreach (var detail in deleteOrderDetails)
 
         }
 
-
+ 
     }
 
 }
