@@ -18,25 +18,27 @@ namespace TestTask
 
         }
 
-
+         
 
         private void Form1_Load(object sender, EventArgs e)
+
         {
-            UpdateEmployeesList();
-            UpdateSkillsList();
+            using (var db = Program.OpenConnection())
+            {
+                UpdateEmployeesList(db);
+                UpdateSkillsList(db);
+            }
 
         }
 
 
 
-        private void UpdateEmployeesList()
+        private void UpdateEmployeesList(Mapping.DataContext db)
         {
             listEmployee.Items.Clear();
-
-            var employees = Program.Database.employee;
-                //var employees = Program.Database.GetTable<Data.Employee>();
-
-
+            
+            var employees = db.employee;
+            //var employees = Program.Database.GetTable<Data.Employee>();
             var sortedEmployees = from e in employees
                                   where listSkills.SelectedItem == null|| e.ps.Any(x => x.skill == listSkills.SelectedItem)
                                   where e.second_name.StartsWith(textFilterSecondName.Text)
@@ -52,11 +54,11 @@ namespace TestTask
 
 
 
-        private void UpdateSkillsList()
+        private void UpdateSkillsList(Mapping.DataContext db)
         {
             listSkills.Items.Clear();
 
-            var skills = Program.Database.skill;
+            var skills = db.skill;
                 //Program.Database.GetTable<Data.Skill>();
 
             //var employees = Program.Database.GetTable<Data.Employee>();
@@ -90,8 +92,11 @@ namespace TestTask
             ifrm.ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;//тип изменен
           
             ifrm.ShowDialog();
-            UpdateEmployeesList();
-            UpdateSkillsList();
+            using (var db = Program.OpenConnection())
+            {
+                UpdateEmployeesList(db);
+                UpdateSkillsList(db);
+            }
 
 
 
@@ -102,8 +107,11 @@ namespace TestTask
 
             Form ifrm = new Form3();
             ifrm.ShowDialog();
-            UpdateEmployeesList();
-            UpdateSkillsList();
+            using (var db = Program.OpenConnection())
+            {
+                UpdateEmployeesList(db);
+                UpdateSkillsList(db);
+            }
 
 
         }
@@ -117,71 +125,81 @@ namespace TestTask
                 MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button2,
                 MessageBoxOptions.DefaultDesktopOnly);
-
-            if (result == DialogResult.Yes)
+            using (var db = Program.OpenConnection())
             {
-                
-                var ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;
-                
+                if (result == DialogResult.Yes)
+                {
 
-
-                var emId = ChangingEmployee.employee_id;
-                Program.Database.employee.DeleteOnSubmit(ChangingEmployee);
-
-                var deleteSelectedPs = from ps in Program.Database.ps
-                                       where ps.person_id == emId
-                                       select ps;
-                //foreach (var ps in deleteSelectedPs)
-                //{
-                //    Program.Database.ps.DeleteOnSubmit(ps);
-                //}
-
-                Program.Database.ps.DeleteAllOnSubmit(deleteSelectedPs);
+                    var ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;
 
 
 
+                    var emId = ChangingEmployee.employee_id;
+                    
 
+                    db.employee.DeleteOnSubmit(ChangingEmployee);
+
+                    var deleteSelectedPs = from ps in db.ps
+                                           where ps.person_id == emId
+                                           select ps;
+                    //foreach (var ps in deleteSelectedPs)
+                    //{
+                    //    Program.Database.ps.DeleteOnSubmit(ps);
+                    //}
+
+                    db.ps.DeleteAllOnSubmit(deleteSelectedPs);
+
+
+
+
+                }
+                db.SubmitChanges();
+                UpdateEmployeesList(db);
+                UpdateSkillsList(db);
+                Focus();
             }
-            Program.Database.SubmitChanges();
-            UpdateEmployeesList();
-            UpdateSkillsList();
-            Focus();
+
         }
 
 
 
         private void buttonDeleteSkill_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(
+            
+                DialogResult result = MessageBox.Show(
                 "Все данные о навыке и владеющих им сотрудниках будут удалены. Удалить?",
                 "Удаление информации о навыке",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button2,
                 MessageBoxOptions.DefaultDesktopOnly);
-
-            if (result == DialogResult.Yes)
+            using (var db = Program.OpenConnection())
             {
 
-                var ChangingSkill = listSkills.SelectedItem as TestTask.Mapping.skill;
+                if (result == DialogResult.Yes)
+                {
+
+                    var ChangingSkill = listSkills.SelectedItem as TestTask.Mapping.skill;
 
 
 
-                var skill_id = ChangingSkill.skill_id;//ссылка на об не указ на экз объекта (не выделен объект)
-                Program.Database.skill.DeleteOnSubmit(ChangingSkill);
+                    var skill_id = ChangingSkill.skill_id;//ссылка на об не указ на экз объекта (не выделен объект)
+                    db.skill.DeleteOnSubmit(ChangingSkill);
 
-                var deleteSelectedPs = from ps in Program.Database.ps
-                                       where ps.skills_id == skill_id
-                                       select ps;
+                    var deleteSelectedPs = from ps in db.ps
+                                           where ps.skills_id == skill_id
+                                           select ps;
 
 
-                Program.Database.ps.DeleteAllOnSubmit(deleteSelectedPs);
+                    db.ps.DeleteAllOnSubmit(deleteSelectedPs);
+                }
+                db.SubmitChanges();
+                listSkills.SelectedItem = null;
+                UpdateEmployeesList(db);
+                UpdateSkillsList(db);
+                BringToFront();
+
             }
-            Program.Database.SubmitChanges();
-            listSkills.SelectedItem = null;
-            UpdateEmployeesList();
-            UpdateSkillsList();
-            BringToFront();
 
 
         }
@@ -201,18 +219,33 @@ namespace TestTask
 
 
 
-        private void textFilterSecondName_TextChanged(object sender, EventArgs e) => UpdateEmployeesList();
-
-        private void textFilterSkillName_TextChanged(object sender, EventArgs e) => UpdateSkillsList();
-
-        private void listSkills_SelectedValueChanged(object sender, EventArgs e) => UpdateEmployeesList();
-
-        private void listEmployees_SelectedValueChanged(object sender, EventArgs e) => UpdateSkillsList();
-
-        private void ButtonSkills_Click(object sender, EventArgs e)
+        private void textFilterSecondName_TextChanged(object sender, EventArgs e)
         {
-
+            using (var db = Program.OpenConnection())
+                UpdateEmployeesList(db);
         }
+
+        private void textFilterSkillName_TextChanged(object sender, EventArgs e)
+        {
+            using (var db = Program.OpenConnection())
+                UpdateSkillsList(db);
+        }
+
+
+        private void listSkills_SelectedValueChanged(object sender, EventArgs e)
+        {
+            using (var db = Program.OpenConnection())
+                UpdateEmployeesList(db);
+        }
+
+
+        private void listEmployees_SelectedValueChanged(object sender, EventArgs e)
+        {
+            using (var db = Program.OpenConnection())
+                UpdateSkillsList(db);
+        }
+
+
 
  
     }

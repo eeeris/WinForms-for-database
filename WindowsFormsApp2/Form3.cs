@@ -18,18 +18,27 @@ namespace TestTask
             InitializeComponent();
         }
 
+
+        //using (var db = new DataContext()) or  using (DataContext db = new DataContext()) or DataContext db = new DataContext(connectionString);
+
+
+        //string connectionString = "TutorialDB";
+
         private void Form3_Load(object sender, EventArgs e)
         {
-            Update_checkedListBoxEmployee();
+
+            using (var db = Program.OpenConnection())
+                Update_checkedListBoxEmployee(db);
         }
 
 
 
-        private void Update_checkedListBoxEmployee()
+        private void Update_checkedListBoxEmployee(Mapping.DataContext db)
         {
             checkedListBoxEmployee.Items.Clear();
 
-            var sortedEmployees = from e in Program.Database.employee
+
+            var sortedEmployees = from e in db.employee
                                   orderby e.second_name
                                   select e;
 
@@ -52,41 +61,44 @@ namespace TestTask
         {
             addNewSkill = new TestTask.Mapping.skill();
             addNewSkill.skill_name = textBoxAddNewSkill.Text;
-            Program.Database.skill.InsertOnSubmit(addNewSkill);
-
-            for (int i = 0; i < checkedListBoxEmployee.Items.Count; i++)
+            using (var db = Program.OpenConnection())
             {
-                var employee = checkedListBoxEmployee.Items[i] as Mapping.employee;
+                db.skill.InsertOnSubmit(addNewSkill);
 
-                bool isLinkedWithEmployee = addNewSkill.ps.Any(x => x.employee == employee);
-
-                if (checkedListBoxEmployee.GetItemChecked(i) == true && isLinkedWithEmployee == false)
+                for (int i = 0; i < checkedListBoxEmployee.Items.Count; i++)
                 {
-                    var ps = new Mapping.ps { skills_id = addNewSkill.skill_id, person_id = employee.employee_id };
+                    var employee = checkedListBoxEmployee.Items[i] as Mapping.employee;
 
-                    addNewSkill.ps.Add(ps);
-                    employee.ps.Add(ps);
+                    bool isLinkedWithEmployee = addNewSkill.ps.Any(x => x.employee == employee);
 
-                    Program.Database.ps.InsertOnSubmit(ps);
+                    if (checkedListBoxEmployee.GetItemChecked(i) == true && isLinkedWithEmployee == false)
+                    {
+                        var ps = new Mapping.ps { skills_id = addNewSkill.skill_id, person_id = employee.employee_id };
 
+                        addNewSkill.ps.Add(ps);
+                        employee.ps.Add(ps);
+
+                        db.ps.InsertOnSubmit(ps);
+
+                    }
                 }
+
+                db.SubmitChanges();
             }
 
-            Program.Database.SubmitChanges();
 
-            
-            Close();
-
-
-            
+             Close();
         }
+
+
 
         private void ButtonNewEmployee_Click(object sender, EventArgs e)
         {
 
             Form ifrm = new Form2();
             ifrm.ShowDialog();
-            Update_checkedListBoxEmployee();
+            using (var db = Program.OpenConnection())
+                Update_checkedListBoxEmployee(db);
             //using (var db = new DataContext())
             
         }

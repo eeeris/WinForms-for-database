@@ -24,19 +24,23 @@ namespace TestTask
         {
             checkedListBoxSkills.Items.Clear();
 
-            var sortedSkills = from s in Program.Database.skill
-                               orderby s.skill_name
-                               select s;
+            using (var db = Program.OpenConnection())
 
-
-            foreach (var skill in sortedSkills)
             {
-                if (ChangingEmployee.second_name == null)// ссылка на объект не указывает на экземпляр
-                    checkedListBoxSkills.Items.Add(skill);
-                else
+                var sortedSkills = from s in db.skill
+                                   orderby s.skill_name
+                                   select s;
+
+
+                foreach (var skill in sortedSkills)
                 {
-                    bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
-                    checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
+                    if (ChangingEmployee.second_name == null)// ссылка на объект не указывает на экземпляр
+                        checkedListBoxSkills.Items.Add(skill);
+                    else
+                    {
+                        bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
+                        checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
+                    }
                 }
             }
 
@@ -121,50 +125,55 @@ namespace TestTask
             ChangingEmployee.mail = textMail.Text;
             //ChangingEmployee.ps = new System.Data.Linq.EntitySet<Mapping.ps>();
 
-            var employees = Program.Database.employee;
 
+            using (var db = Program.OpenConnection())
 
-            if (ChangingEmployee.employee_id == 0)
             {
-
-                employees.InsertOnSubmit(ChangingEmployee);
-                Program.Database.SubmitChanges();
- 
-                
-             }
+                var employees = db.employee;
 
 
-
-            for (int i = 0; i < checkedListBoxSkills.Items.Count; i++)
-            {
-                var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
-
-                //bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
-                var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill == skill);
-
-                if (checkedListBoxSkills.GetItemChecked(i) == true && association == null)
-                {
-                    association = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
-
-                    //Или оно должно само обновиться?
-                    ChangingEmployee.ps.Add(association);
-                    skill.ps.Add(association);
-
-                    Program.Database.ps.InsertOnSubmit(association);
-
-                }
-                else if (checkedListBoxSkills.GetItemChecked(i) == false && association != null)
+                if (ChangingEmployee.employee_id == 0)
                 {
 
-                    Program.Database.ps.DeleteOnSubmit(association);
+                    employees.InsertOnSubmit(ChangingEmployee);
+                    db.SubmitChanges();
+
 
                 }
+
+
+
+                for (int i = 0; i < checkedListBoxSkills.Items.Count; i++)
+                {
+                    var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
+
+                    //bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
+                    var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill == skill);
+
+                    if (checkedListBoxSkills.GetItemChecked(i) == true && association == null)
+                    {
+                        association = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
+
+                        //Или оно должно само обновиться?
+                        ChangingEmployee.ps.Add(association);
+                        skill.ps.Add(association);
+
+                        db.ps.InsertOnSubmit(association);
+
+                    }
+                    else if (checkedListBoxSkills.GetItemChecked(i) == false && association != null)
+                    {
+
+                        db.ps.DeleteOnSubmit(association);
+
+                    }
+                }
+
+                db.SubmitChanges();//удаление фэйл
+
+
+                Close();
             }
-
-            Program.Database.SubmitChanges();//удаление фэйл
-
-
-        Close();
             
         }
 
