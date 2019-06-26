@@ -40,9 +40,11 @@
             // 
             // textBoxAddNewSkill
             // 
+            this.textBoxAddNewSkill.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxAddNewSkill.Location = new System.Drawing.Point(49, 65);
             this.textBoxAddNewSkill.Name = "textBoxAddNewSkill";
-            this.textBoxAddNewSkill.Size = new System.Drawing.Size(163, 20);
+            this.textBoxAddNewSkill.Size = new System.Drawing.Size(170, 20);
             this.textBoxAddNewSkill.TabIndex = 0;
             // 
             // labelAddNewSkill
@@ -59,21 +61,25 @@
             this.labelAddEmployee.AutoSize = true;
             this.labelAddEmployee.Location = new System.Drawing.Point(46, 135);
             this.labelAddEmployee.Name = "labelAddEmployee";
-            this.labelAddEmployee.Size = new System.Drawing.Size(151, 13);
+            this.labelAddEmployee.Size = new System.Drawing.Size(152, 13);
             this.labelAddEmployee.TabIndex = 2;
-            this.labelAddEmployee.Text = "сотрудники с этим навыком";
+            this.labelAddEmployee.Text = "Сотрудники с этим навыком";
             // 
             // checkedListBoxEmployee
             // 
+            this.checkedListBoxEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkedListBoxEmployee.FormattingEnabled = true;
-            this.checkedListBoxEmployee.Location = new System.Drawing.Point(49, 164);
+            this.checkedListBoxEmployee.Location = new System.Drawing.Point(37, 148);
             this.checkedListBoxEmployee.Name = "checkedListBoxEmployee";
-            this.checkedListBoxEmployee.Size = new System.Drawing.Size(163, 94);
+            this.checkedListBoxEmployee.Size = new System.Drawing.Size(172, 79);
             this.checkedListBoxEmployee.TabIndex = 3;
             // 
             // buttonNewEmployee
             // 
-            this.buttonNewEmployee.Location = new System.Drawing.Point(239, 135);
+            this.buttonNewEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonNewEmployee.Location = new System.Drawing.Point(246, 135);
             this.buttonNewEmployee.Name = "buttonNewEmployee";
             this.buttonNewEmployee.Size = new System.Drawing.Size(75, 23);
             this.buttonNewEmployee.TabIndex = 4;
@@ -83,17 +89,22 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.buttonAddSkill);
+            this.groupBox1.Controls.Add(this.checkedListBoxEmployee);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(335, 303);
+            this.groupBox1.Size = new System.Drawing.Size(347, 246);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
             // buttonAddSkill
             // 
-            this.buttonAddSkill.Location = new System.Drawing.Point(227, 50);
+            this.buttonAddSkill.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddSkill.Location = new System.Drawing.Point(235, 53);
             this.buttonAddSkill.Name = "buttonAddSkill";
             this.buttonAddSkill.Size = new System.Drawing.Size(75, 23);
             this.buttonAddSkill.TabIndex = 0;
@@ -105,9 +116,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(354, 317);
+            this.ClientSize = new System.Drawing.Size(361, 268);
             this.Controls.Add(this.buttonNewEmployee);
-            this.Controls.Add(this.checkedListBoxEmployee);
             this.Controls.Add(this.labelAddEmployee);
             this.Controls.Add(this.labelAddNewSkill);
             this.Controls.Add(this.textBoxAddNewSkill);
