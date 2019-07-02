@@ -38,14 +38,13 @@ namespace TestTask
             listEmployee.Items.Clear();
             
             var employees = db.employee;
-            //var employees = Program.Database.GetTable<Data.Employee>();
             var sortedEmployees = from e in employees
                                   where listSkills.SelectedItem == null|| e.ps.Any(x => x.skill == listSkills.SelectedItem)
                                   where e.second_name.StartsWith(textFilterSecondName.Text)
                                   orderby e.second_name
                                   select e;
 
-            foreach (var employee in sortedEmployees)//здесь возникла ошибка подключения
+            foreach (var employee in sortedEmployees)
 
             {
                 listEmployee.Items.Add(employee);
@@ -59,24 +58,12 @@ namespace TestTask
             listSkills.Items.Clear();
 
             var skills = db.skill;
-                //Program.Database.GetTable<Data.Skill>();
-
-            //var employees = Program.Database.GetTable<Data.Employee>();
-            //var ps = Program.Database.GetTable<Data.Ps>();
 
             var sortedSkills = from s in skills
-                               //from e in employees
-                               //from p in ps
                                where listEmployee.SelectedItem == null || s.ps.Any(x => x.employee == listEmployee.SelectedItem)
                                where s.skill_name.StartsWith(textFilerSkillName.Text)
                                orderby s.skill_name
                                select s;
-         
-
-            //var sortedSkills1 = skills.
-            //    Where(s => listEmployee.SelectedItem == null || s.Ps.Any(x => x.Employee == listEmployee.SelectedItem)).
-            //    Where(s => s.SkillName.StartsWith(textFilerSkillName.Text)).
-            //    OrderBy(s => s.SkillName);
 
             foreach (var skill in sortedSkills)
             {
@@ -97,11 +84,9 @@ namespace TestTask
                 UpdateEmployeesList(db);
                 UpdateSkillsList(db);
             }
-
-
-
-
         }
+
+
         private void ButtonAddSkill_Click(object sender, EventArgs e)
         {
 
@@ -112,8 +97,6 @@ namespace TestTask
                 UpdateEmployeesList(db);
                 UpdateSkillsList(db);
             }
-
-
         }
 
         private void buttonDeleteEmployee_Click(object sender, EventArgs e)
@@ -131,12 +114,6 @@ namespace TestTask
 
                     var ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;
 
-
-
-                    //var emId = ChangingEmployee.employee_id;
-
-
-                    //db.employee.DeleteOnSubmit(ChangingEmployee);
                     var em = db.employee.Where(x => x.employee_id == ChangingEmployee.employee_id).Single();
 
                     db.employee.DeleteOnSubmit(em);
@@ -144,10 +121,6 @@ namespace TestTask
                     var deleteSelectedPs = from ps in db.ps
                                            where ps.person_id == em.employee_id
                                            select ps;
-                    //foreach (var ps in deleteSelectedPs)
-                    //{
-                    //    Program.Database.ps.DeleteOnSubmit(ps);
-                    //}
 
                     db.ps.DeleteAllOnSubmit(deleteSelectedPs);
 
@@ -164,16 +137,17 @@ namespace TestTask
         }
 
 
-
         private void buttonDeleteSkill_Click(object sender, EventArgs e)
         {
-            
-                DialogResult result = MessageBox.Show(
+            DialogResult result = MessageBox.Show
+            (
                 "Все данные о навыке и владеющих им сотрудниках будут удалены. Удалить?",
                 "Удаление информации о навыке",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2);
+                MessageBoxDefaultButton.Button2
+             );
+
             using (var db = Program.OpenConnection())
             {
 
@@ -182,10 +156,6 @@ namespace TestTask
 
                     var ChangingSkill = listSkills.SelectedItem as TestTask.Mapping.skill;
 
-
-
-                    //var skill_id = ChangingSkill.skill_id;//ссылка на об не указ на экз объекта (не выделен объект)
-                    //db.skill.DeleteOnSubmit(ChangingSkill);
                     var sk = db.skill.Where(x => x.skill_id == ChangingSkill.skill_id).Single();
 
                     db.skill.DeleteOnSubmit(sk);
@@ -202,10 +172,7 @@ namespace TestTask
                 UpdateEmployeesList(db);
                 UpdateSkillsList(db);
                 BringToFront();
-
             }
-
-
         }
         
 
@@ -214,13 +181,11 @@ namespace TestTask
             listEmployee.SelectedItem = null;
         }
 
+
         private void listSkills_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             listSkills.SelectedItem = null;
         }
-
-
-
 
 
         private void textFilterSecondName_TextChanged(object sender, EventArgs e)
@@ -228,6 +193,7 @@ namespace TestTask
             using (var db = Program.OpenConnection())
                 UpdateEmployeesList(db);
         }
+
 
         private void textFilterSkillName_TextChanged(object sender, EventArgs e)
         {

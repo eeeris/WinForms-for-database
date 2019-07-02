@@ -42,27 +42,22 @@ namespace TestTask
                     catch
                     { checkedListBoxSkills.Items.Add(skill); }
 
-                    /*if (em.second_name == null)// ссылка на объект не указывает на экземпляр
-                        checkedListBoxSkills.Items.Add(skill);
-                    else
-                    {
-                        bool isLinkedWithEmployee = em.ps.Any(x => x.skill == skill);//"Доступ к ликвидированному объекту невозможен.
-                        checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
-                    }*/
                 }
             }
-
         }
+
 
         private void Form2_Load(object sender, EventArgs e)
         {
 
         }
 
+
         public TestTask.Mapping.employee ChangingEmployee
         {
             get; set;
         }
+
 
         private void UpdateUI()
         {
@@ -101,9 +96,6 @@ namespace TestTask
                 textPassportNumber.Text = ChangingEmployee.passport_number?.ToString();
                 textPhoneNumber.Text = ChangingEmployee.phone_number?.ToString();
                 textMail.Text = ChangingEmployee.mail;
-                
-                
-
             }
         }
 
@@ -126,7 +118,7 @@ namespace TestTask
             catch
             { ChangingEmployee.phone_number = null; }
             ChangingEmployee.mail = textMail.Text;
-            //ChangingEmployee.ps = new System.Data.Linq.EntitySet<Mapping.ps>();
+            
             
             if (String.IsNullOrEmpty(ChangingEmployee.second_name) || String.IsNullOrEmpty(ChangingEmployee.first_name) || String.IsNullOrEmpty(ChangingEmployee.position))
             {
@@ -161,14 +153,12 @@ namespace TestTask
                     {
                         var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
 
-                        //bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
                         var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill == skill);
 
                         if (checkedListBoxSkills.GetItemChecked(i) == true && association == null)
                         {
                             association = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
 
-                            //Или оно должно само обновиться?
                             ChangingEmployee.ps.Add(association);
                             skill.ps.Add(association);
 
@@ -183,7 +173,7 @@ namespace TestTask
                         }
                     }
 
-                    db.SubmitChanges();//удаление фэйл
+                    db.SubmitChanges();
                 }
                 Close();
             }
@@ -195,13 +185,9 @@ namespace TestTask
 
         private void ButtonAddSkill_Click(object sender, EventArgs e)
         {
-
             Form ifrm = new Form3();
             ifrm.ShowDialog();
             UpdateSkillsList();
-
-
-
         }
 
 
