@@ -34,13 +34,21 @@ namespace TestTask
 
                 foreach (var skill in sortedSkills)
                 {
-                    if (ChangingEmployee.second_name == null)// ссылка на объект не указывает на экземпляр
+                    try
+                    { var em = db.employee.Where(x => x.employee_id == ChangingEmployee.employee_id).Single();
+                        bool isLinkedWithEmployee = em.ps.Any(x => x.skill == skill);//"Доступ к ликвидированному объекту невозможен.
+                        checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
+                    }
+                    catch
+                    { checkedListBoxSkills.Items.Add(skill); }
+
+                    /*if (em.second_name == null)// ссылка на объект не указывает на экземпляр
                         checkedListBoxSkills.Items.Add(skill);
                     else
                     {
-                        bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
+                        bool isLinkedWithEmployee = em.ps.Any(x => x.skill == skill);//"Доступ к ликвидированному объекту невозможен.
                         checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
-                    }
+                    }*/
                 }
             }
 
@@ -103,78 +111,85 @@ namespace TestTask
 
         private void ButtonAddEmployee_Click(object sender, EventArgs e)
         {
-
-
             ChangingEmployee.second_name = textSecondName.Text;
             ChangingEmployee.first_name = textFirstName.Text;
             ChangingEmployee.position = textPosition.Text;
             ChangingEmployee.education = textEducation.Text;
             ChangingEmployee.date_of_birth = dateOfBirth.Value;
             ChangingEmployee.address = textAddress.Text;
-
             try
             { ChangingEmployee.passport_number = Convert.ToInt64(textPassportNumber.Text); }
             catch
             { ChangingEmployee.passport_number = null; }
-
             try
             { ChangingEmployee.phone_number = Convert.ToInt64(textPhoneNumber.Text); }
             catch
             { ChangingEmployee.phone_number = null; }
-
             ChangingEmployee.mail = textMail.Text;
             //ChangingEmployee.ps = new System.Data.Linq.EntitySet<Mapping.ps>();
-
-
-            using (var db = Program.OpenConnection())
-
+            
+            if (String.IsNullOrEmpty(ChangingEmployee.second_name) || String.IsNullOrEmpty(ChangingEmployee.first_name) || String.IsNullOrEmpty(ChangingEmployee.position))
             {
-                var employees = db.employee;
+                MessageBox.Show(
+                "Заполните все поля, отмеченные звездочкой",
+                "Не заполнены все обязательные поля",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+               
+            }
 
+            else
+            {
+                using (var db = Program.OpenConnection())
 
-                if (ChangingEmployee.employee_id == 0)
                 {
-
-                    employees.InsertOnSubmit(ChangingEmployee);
-                    db.SubmitChanges();
+                    var employees = db.employee;
 
 
-                }
-
-
-
-                for (int i = 0; i < checkedListBoxSkills.Items.Count; i++)
-                {
-                    var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
-
-                    //bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
-                    var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill == skill);
-
-                    if (checkedListBoxSkills.GetItemChecked(i) == true && association == null)
-                    {
-                        association = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
-
-                        //Или оно должно само обновиться?
-                        ChangingEmployee.ps.Add(association);
-                        skill.ps.Add(association);
-
-                        db.ps.InsertOnSubmit(association);
-
-                    }
-                    else if (checkedListBoxSkills.GetItemChecked(i) == false && association != null)
+                    if (ChangingEmployee.employee_id == 0)
                     {
 
-                        db.ps.DeleteOnSubmit(association);
+                        employees.InsertOnSubmit(ChangingEmployee);
+                        db.SubmitChanges();
+
 
                     }
+
+
+
+                    for (int i = 0; i < checkedListBoxSkills.Items.Count; i++)
+                    {
+                        var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
+
+                        //bool isLinkedWithEmployee = ChangingEmployee.ps.Any(x => x.skill == skill);
+                        var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill == skill);
+
+                        if (checkedListBoxSkills.GetItemChecked(i) == true && association == null)
+                        {
+                            association = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
+
+                            //Или оно должно само обновиться?
+                            ChangingEmployee.ps.Add(association);
+                            skill.ps.Add(association);
+
+                            db.ps.InsertOnSubmit(association);
+
+                        }
+                        else if (checkedListBoxSkills.GetItemChecked(i) == false && association != null)
+                        {
+
+                            db.ps.DeleteOnSubmit(association);
+
+                        }
+                    }
+
+                    db.SubmitChanges();//удаление фэйл
                 }
-
-                db.SubmitChanges();//удаление фэйл
-
-
                 Close();
             }
             
+
+
         }
 
 

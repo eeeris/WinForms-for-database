@@ -19,11 +19,6 @@ namespace TestTask
         }
 
 
-        //using (var db = new DataContext()) or  using (DataContext db = new DataContext()) or DataContext db = new DataContext(connectionString);
-
-
-        //string connectionString = "TutorialDB";
-
         private void Form3_Load(object sender, EventArgs e)
         {
 
@@ -59,35 +54,60 @@ namespace TestTask
 
         private void buttonAddSkill_Click(object sender, EventArgs e)
         {
+
             addNewSkill = new TestTask.Mapping.skill();
             addNewSkill.skill_name = textBoxAddNewSkill.Text;
             using (var db = Program.OpenConnection())
+                
             {
-                db.skill.InsertOnSubmit(addNewSkill);
-
-                for (int i = 0; i < checkedListBoxEmployee.Items.Count; i++)
+                var sk = db.skill.FirstOrDefault(x => x.skill_name == addNewSkill.skill_name);
+                if (String.IsNullOrEmpty(addNewSkill.skill_name))
                 {
-                    var employee = checkedListBoxEmployee.Items[i] as Mapping.employee;
+                    MessageBox.Show(
+                    "ввведите название навыка",
+                    "Пустое значение",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
 
-                    bool isLinkedWithEmployee = addNewSkill.ps.Any(x => x.employee == employee);
-
-                    if (checkedListBoxEmployee.GetItemChecked(i) == true && isLinkedWithEmployee == false)
-                    {
-                        var ps = new Mapping.ps { skills_id = addNewSkill.skill_id, person_id = employee.employee_id };
-
-                        addNewSkill.ps.Add(ps);
-                        employee.ps.Add(ps);
-
-                        db.ps.InsertOnSubmit(ps);
-
-                    }
                 }
 
-                db.SubmitChanges();
+                else if (sk != null)
+                {
+                    MessageBox.Show(
+                    "Этот навык уже добавлен в базу!",
+                    "существующее значение",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                }
+
+
+                else
+                {
+                    db.skill.InsertOnSubmit(addNewSkill);
+
+                    for (int i = 0; i < checkedListBoxEmployee.Items.Count; i++)
+                    {
+                        var employee = checkedListBoxEmployee.Items[i] as Mapping.employee;
+
+                        bool isLinkedWithEmployee = addNewSkill.ps.Any(x => x.employee == employee);
+
+                        if (checkedListBoxEmployee.GetItemChecked(i) == true && isLinkedWithEmployee == false)
+                        {
+                            var ps = new Mapping.ps { skills_id = addNewSkill.skill_id, person_id = employee.employee_id };
+
+                            addNewSkill.ps.Add(ps);
+                            employee.ps.Add(ps);
+
+                            db.ps.InsertOnSubmit(ps);
+
+                        }
+                    }
+
+                    db.SubmitChanges();
+                    Close();
+                }
             }
-
-
-             Close();
         }
 
 
@@ -99,7 +119,6 @@ namespace TestTask
             ifrm.ShowDialog();
             using (var db = Program.OpenConnection())
                 Update_checkedListBoxEmployee(db);
-            //using (var db = new DataContext())
             
         }
 

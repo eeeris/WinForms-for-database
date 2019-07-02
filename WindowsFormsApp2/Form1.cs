@@ -45,7 +45,7 @@ namespace TestTask
                                   orderby e.second_name
                                   select e;
 
-            foreach (var employee in sortedEmployees)
+            foreach (var employee in sortedEmployees)//здесь возникла ошибка подключения
 
             {
                 listEmployee.Items.Add(employee);
@@ -123,8 +123,7 @@ namespace TestTask
                 "Удаление информации о сотруднике",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2,
-                MessageBoxOptions.DefaultDesktopOnly);
+                MessageBoxDefaultButton.Button2);
             using (var db = Program.OpenConnection())
             {
                 if (result == DialogResult.Yes)
@@ -134,13 +133,16 @@ namespace TestTask
 
 
 
-                    var emId = ChangingEmployee.employee_id;
-                    
+                    //var emId = ChangingEmployee.employee_id;
 
-                    db.employee.DeleteOnSubmit(ChangingEmployee);
+
+                    //db.employee.DeleteOnSubmit(ChangingEmployee);
+                    var em = db.employee.Where(x => x.employee_id == ChangingEmployee.employee_id).Single();
+
+                    db.employee.DeleteOnSubmit(em);
 
                     var deleteSelectedPs = from ps in db.ps
-                                           where ps.person_id == emId
+                                           where ps.person_id == em.employee_id
                                            select ps;
                     //foreach (var ps in deleteSelectedPs)
                     //{
@@ -171,8 +173,7 @@ namespace TestTask
                 "Удаление информации о навыке",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2,
-                MessageBoxOptions.DefaultDesktopOnly);
+                MessageBoxDefaultButton.Button2);
             using (var db = Program.OpenConnection())
             {
 
@@ -183,11 +184,14 @@ namespace TestTask
 
 
 
-                    var skill_id = ChangingSkill.skill_id;//ссылка на об не указ на экз объекта (не выделен объект)
-                    db.skill.DeleteOnSubmit(ChangingSkill);
+                    //var skill_id = ChangingSkill.skill_id;//ссылка на об не указ на экз объекта (не выделен объект)
+                    //db.skill.DeleteOnSubmit(ChangingSkill);
+                    var sk = db.skill.Where(x => x.skill_id == ChangingSkill.skill_id).Single();
+
+                    db.skill.DeleteOnSubmit(sk);
 
                     var deleteSelectedPs = from ps in db.ps
-                                           where ps.skills_id == skill_id
+                                           where ps.skills_id == sk.skill_id
                                            select ps;
 
 

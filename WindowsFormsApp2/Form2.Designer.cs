@@ -100,9 +100,9 @@
             this.labelSkills.AutoSize = true;
             this.labelSkills.Location = new System.Drawing.Point(52, 228);
             this.labelSkills.Name = "labelSkills";
-            this.labelSkills.Size = new System.Drawing.Size(51, 13);
+            this.labelSkills.Size = new System.Drawing.Size(47, 13);
             this.labelSkills.TabIndex = 4;
-            this.labelSkills.Text = "Навыки*";
+            this.labelSkills.Text = "Навыки";
             // 
             // labelInformation
             // 
