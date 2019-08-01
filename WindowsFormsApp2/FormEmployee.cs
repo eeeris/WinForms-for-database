@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace TestTask
 {
-    public partial class Form2 : Form
+    public partial class FormEmployee : Form
     {
-        public Form2()
+        public FormEmployee()
         {
             InitializeComponent();
         }
@@ -185,7 +185,7 @@ namespace TestTask
 
         private void ButtonAddSkill_Click(object sender, EventArgs e)
         {
-            Form ifrm = new Form3();
+            Form ifrm = new FormSkill();
             ifrm.ShowDialog();
             UpdateSkillsList();
         }

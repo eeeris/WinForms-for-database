@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TestTask
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
 
@@ -75,7 +75,7 @@ namespace TestTask
         private void ButtonAddEmployee_Click(object sender, EventArgs e)
         {
             
-            var ifrm = new Form2();
+            var ifrm = new FormEmployee();
             ifrm.ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;//тип изменен
           
             ifrm.ShowDialog();
@@ -90,7 +90,7 @@ namespace TestTask
         private void ButtonAddSkill_Click(object sender, EventArgs e)
         {
 
-            Form ifrm = new Form3();
+            Form ifrm = new FormSkill();
             ifrm.ShowDialog();
             using (var db = Program.OpenConnection())
             {

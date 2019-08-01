@@ -11,9 +11,9 @@ using System.Data.Linq;
 
 namespace TestTask
 {
-    public partial class Form3 : Form
+    public partial class FormSkill : Form
     {
-        public Form3()
+        public FormSkill()
         {
             InitializeComponent();
         }
@@ -115,7 +115,7 @@ namespace TestTask
         private void ButtonNewEmployee_Click(object sender, EventArgs e)
         {
 
-            Form ifrm = new Form2();
+            Form ifrm = new FormEmployee();
             ifrm.ShowDialog();
             using (var db = Program.OpenConnection())
                 Update_checkedListBoxEmployee(db);

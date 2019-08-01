@@ -1,6 +1,6 @@
 ﻿namespace TestTask
 {
-    partial class Form3
+    partial class FormSkill
     {
         /// <summary>
         /// Required designer variable.
