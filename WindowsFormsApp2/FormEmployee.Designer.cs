@@ -325,15 +325,14 @@
             this.splitContainer1.SplitterDistance = 413;
             this.splitContainer1.TabIndex = 26;
             // 
-            // Form2
+            // FormEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 487);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "Form2";
+            this.Name = "FormEmployee";
             this.Text = "Form2";
-            this.Load += new System.EventHandler(this.Form2_Load);
             this.Shown += new System.EventHandler(this.Form2_Shown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

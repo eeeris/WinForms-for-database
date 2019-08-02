@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using TestTask.Mapping;
 
 namespace TestTask
 {
@@ -24,7 +24,12 @@ namespace TestTask
         {
             checkedListBoxSkills.Items.Clear();
 
-            using (var db = Program.OpenConnection())
+            foreach ((skill skill, bool isLinkedWithEmployee) in DataProvider.UpdateCheckedListBoxSkills(ChangingEmployee))
+            {
+                checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
+            }
+
+            /*using (var db = Program.OpenConnection())
 
             {
                 var sortedSkills = from s in db.skill
@@ -35,22 +40,17 @@ namespace TestTask
                 foreach (var skill in sortedSkills)
                 {
                     try
-                    { var em = db.employee.Where(x => x.employee_id == ChangingEmployee.employee_id).Single();
+                    {
+                        var em = db.employee.Where(x => x.employee_id == ChangingEmployee.employee_id).Single();
                         bool isLinkedWithEmployee = em.ps.Any(x => x.skill == skill);//"Доступ к ликвидированному объекту невозможен.
                         checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
                     }
                     catch
                     { checkedListBoxSkills.Items.Add(skill); }
 
-                }
-            }
+                }*/
         }
 
-
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
-        }
 
 
         public TestTask.Mapping.employee ChangingEmployee
@@ -61,7 +61,7 @@ namespace TestTask
 
         private void UpdateUI()
         {
-            if (ChangingEmployee.second_name == null)
+            if (ChangingEmployee.employee_id == 0)
             {
                 textSecondName.Text = null;
                 textFirstName.Text = null;
@@ -103,24 +103,8 @@ namespace TestTask
 
         private void ButtonAddEmployee_Click(object sender, EventArgs e)
         {
-            ChangingEmployee.second_name = textSecondName.Text;
-            ChangingEmployee.first_name = textFirstName.Text;
-            ChangingEmployee.position = textPosition.Text;
-            ChangingEmployee.education = textEducation.Text;
-            ChangingEmployee.date_of_birth = dateOfBirth.Value;
-            ChangingEmployee.address = textAddress.Text;
-            try
-            { ChangingEmployee.passport_number = Convert.ToInt64(textPassportNumber.Text); }
-            catch
-            { ChangingEmployee.passport_number = null; }
-            try
-            { ChangingEmployee.phone_number = Convert.ToInt64(textPhoneNumber.Text); }
-            catch
-            { ChangingEmployee.phone_number = null; }
-            ChangingEmployee.mail = textMail.Text;
-            
-            
-            if (String.IsNullOrEmpty(ChangingEmployee.second_name) || String.IsNullOrEmpty(ChangingEmployee.first_name) || String.IsNullOrEmpty(ChangingEmployee.position))
+
+            if (String.IsNullOrEmpty(textSecondName.Text) || String.IsNullOrEmpty(textFirstName.Text) || String.IsNullOrEmpty(textPosition.Text))
             {
                 MessageBox.Show(
                 "Заполните все поля, отмеченные звездочкой",
@@ -129,31 +113,44 @@ namespace TestTask
                 MessageBoxIcon.Warning);
                
             }
-
             else
             {
                 using (var db = Program.OpenConnection())
-
                 {
                     var employees = db.employee;
 
+                    if (ChangingEmployee.employee_id != 0)
+                    {
+                        ChangingEmployee = db.employee.First(x => x.employee_id == ChangingEmployee.employee_id);
+                    }
+
+                    ChangingEmployee.second_name = textSecondName.Text;
+                    ChangingEmployee.first_name = textFirstName.Text;
+                    ChangingEmployee.position = textPosition.Text;
+                    ChangingEmployee.education = textEducation.Text;
+                    ChangingEmployee.date_of_birth = dateOfBirth.Value;
+                    ChangingEmployee.address = textAddress.Text;
+                    try
+                    { ChangingEmployee.passport_number = Convert.ToInt64(textPassportNumber.Text); }
+                    catch
+                    { ChangingEmployee.passport_number = null; }
+                    try
+                    { ChangingEmployee.phone_number = Convert.ToInt64(textPhoneNumber.Text); }
+                    catch
+                    { ChangingEmployee.phone_number = null; }
+                    ChangingEmployee.mail = textMail.Text;
 
                     if (ChangingEmployee.employee_id == 0)
                     {
-
                         employees.InsertOnSubmit(ChangingEmployee);
                         db.SubmitChanges();
-
-
                     }
-
-
 
                     for (int i = 0; i < checkedListBoxSkills.Items.Count; i++)
                     {
                         var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
 
-                        var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill == skill);
+                        var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill.skill_id == skill.skill_id);// потерян экземпляр
 
                         if (checkedListBoxSkills.GetItemChecked(i) == true && association == null)
                         {
