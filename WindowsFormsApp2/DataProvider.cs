@@ -121,6 +121,66 @@ namespace TestTask
         }
 
 
+        public static long ChangeEmployee(employee employeeToAdd)
+        {
+            using (var db = Program.OpenConnection())
+            {
+                var employees = db.employee;
+
+                if (employeeToAdd.employee_id != 0)
+                {
+                    employeeToAdd = db.employee.First(x => x.employee_id == employeeToAdd.employee_id);
+                    return employeeToAdd.employee_id;
+                }
+                return 0;
+            }
+        }
+
+
+
+        public static void AddOrChangeEmployee(long employeeId, IEnumerable<(long id, bool enabled)> skillsIds, Action<employee> employeeSetter)
+        {
+            using (var db = Program.OpenConnection())
+            {
+                var employees = db.employee;
+
+                employee employeeToAdd = null;
+                if (employeeId != 0)
+                {
+                    employeeToAdd = db.employee.First(x => x.employee_id == employeeId);
+                }
+                else
+                {
+                    employeeToAdd = new employee();
+                    employees.InsertOnSubmit(employeeToAdd);
+                }
+
+                employeeSetter(employeeToAdd);
+
+                db.SubmitChanges();
+
+                foreach (var skill in skillsIds)
+                {
+                    //bool isLinkedWithSkill = employeeToAdd.ps.FirstOrDefault(x => x.skill.skill_id == skill.id);
+                    var association = employeeToAdd.ps.FirstOrDefault(x => x.skill.skill_id == skill.id);// потерян экземпляр
+                    if (association == null && skill.enabled)
+                    {
+                        var ps = new Mapping.ps { person_id = employeeToAdd.employee_id, skills_id = skill.id };// attention
+                        db.ps.InsertOnSubmit(ps);
+                    }
+                    else if (association != null && !skill.enabled)
+                    {
+                        db.ps.DeleteOnSubmit(association);
+                    }
+
+                }
+                db.SubmitChanges();
+            }
+
+        }
+
+
+
 
         public static IEnumerable<employee> UpdatecheckedListBoxEmployee()
         {

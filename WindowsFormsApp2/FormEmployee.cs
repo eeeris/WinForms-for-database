@@ -115,65 +115,75 @@ namespace TestTask
             }
             else
             {
-                using (var db = Program.OpenConnection())
+                /*using (var db = Program.OpenConnection())
                 {
                     var employees = db.employee;
 
                     if (ChangingEmployee.employee_id != 0)
                     {
                         ChangingEmployee = db.employee.First(x => x.employee_id == ChangingEmployee.employee_id);
-                    }
+                    }*/
 
-                    ChangingEmployee.second_name = textSecondName.Text;
-                    ChangingEmployee.first_name = textFirstName.Text;
-                    ChangingEmployee.position = textPosition.Text;
-                    ChangingEmployee.education = textEducation.Text;
-                    ChangingEmployee.date_of_birth = dateOfBirth.Value;
-                    ChangingEmployee.address = textAddress.Text;
+                //*DataProvider.ChangeEmployee(ChangingEmployee);
+
+                Action<employee> setter = (changingEmployee) =>
+                {
+                    changingEmployee.second_name = textSecondName.Text;
+                    changingEmployee.first_name = textFirstName.Text;
+                    changingEmployee.position = textPosition.Text;
+                    changingEmployee.education = textEducation.Text;
+                    changingEmployee.date_of_birth = dateOfBirth.Value;
+                    changingEmployee.address = textAddress.Text;
                     try
-                    { ChangingEmployee.passport_number = Convert.ToInt64(textPassportNumber.Text); }
+                    { changingEmployee.passport_number = Convert.ToInt64(textPassportNumber.Text); }
                     catch
-                    { ChangingEmployee.passport_number = null; }
+                    { changingEmployee.passport_number = null; }
                     try
-                    { ChangingEmployee.phone_number = Convert.ToInt64(textPhoneNumber.Text); }
+                    { changingEmployee.phone_number = Convert.ToInt64(textPhoneNumber.Text); }
                     catch
-                    { ChangingEmployee.phone_number = null; }
-                    ChangingEmployee.mail = textMail.Text;
+                    { changingEmployee.phone_number = null; }
+                    changingEmployee.mail = textMail.Text;
+                };
 
-                    if (ChangingEmployee.employee_id == 0)
-                    {
-                        employees.InsertOnSubmit(ChangingEmployee);
-                        db.SubmitChanges();
-                    }
+                //var skillsIDs = checkedListBoxSkills.CheckedItems.Cast<Mapping.skill>().Select(x => x.skill_id);
+                var skills = Enumerable.Range(0, checkedListBoxSkills.Items.Count).Select(i => ((checkedListBoxSkills.Items[i] as skill).skill_id, checkedListBoxSkills.GetItemChecked(i)));
 
-                    for (int i = 0; i < checkedListBoxSkills.Items.Count; i++)
-                    {
-                        var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
+                DataProvider.AddOrChangeEmployee(ChangingEmployee.employee_id, skills, setter);
+                Close();
 
-                        var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill.skill_id == skill.skill_id);// потерян экземпляр
-
-                        if (checkedListBoxSkills.GetItemChecked(i) == true && association == null)
-                        {
-                            association = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
-
-                            ChangingEmployee.ps.Add(association);
-                            skill.ps.Add(association);
-
-                            db.ps.InsertOnSubmit(association);
-
-                        }
-                        else if (checkedListBoxSkills.GetItemChecked(i) == false && association != null)
-                        {
-
-                            db.ps.DeleteOnSubmit(association);
-
-                        }
-                    }
-
+                /*if (ChangingEmployee.employee_id == 0)
+                {
+                    employees.InsertOnSubmit(ChangingEmployee);
                     db.SubmitChanges();
                 }
-                Close();
+
+                for (int i = 0; i < checkedListBoxSkills.Items.Count; i++)
+                {
+                    var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
+
+                    var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill.skill_id == skill.skill_id);// потерян экземпляр
+
+                    if (checkedListBoxSkills.GetItemChecked(i) == true && association == null)
+                    {
+                        association = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
+
+                        ChangingEmployee.ps.Add(association);
+                        skill.ps.Add(association);
+
+                        db.ps.InsertOnSubmit(association);
+
+                    }
+                    else if (checkedListBoxSkills.GetItemChecked(i) == false && association != null)
+                    {
+
+                        db.ps.DeleteOnSubmit(association);
+
+                    }
+                }
+
+                db.SubmitChanges();*/
             }
+
             
 
 
