@@ -31,17 +31,17 @@
             this.textFilterSecondName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonDeleteEmployee = new System.Windows.Forms.Button();
             this.buttonAddEmployee = new System.Windows.Forms.Button();
             this.listEmployee = new System.Windows.Forms.ListBox();
             this.listSkills = new System.Windows.Forms.ListBox();
             this.textFilerSkillName = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonDeleteSkill = new System.Windows.Forms.Button();
             this.buttonAddSkills = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.buttonDeleteEmployee = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.buttonDeleteSkill = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -87,6 +87,39 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel1.Location = new System.Drawing.Point(39, 231);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(215, 13);
+            this.linkLabel1.TabIndex = 9;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "*Двойной щелчок для снятия выделения";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(158, 288);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(111, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Добавить/изменить";
+            // 
+            // buttonDeleteEmployee
+            // 
+            this.buttonDeleteEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonDeleteEmployee.Location = new System.Drawing.Point(42, 260);
+            this.buttonDeleteEmployee.Name = "buttonDeleteEmployee";
+            this.buttonDeleteEmployee.Size = new System.Drawing.Size(61, 27);
+            this.buttonDeleteEmployee.TabIndex = 7;
+            this.buttonDeleteEmployee.Text = "удалить";
+            this.buttonDeleteEmployee.UseVisualStyleBackColor = true;
+            this.buttonDeleteEmployee.Click += new System.EventHandler(this.buttonDeleteEmployee_Click);
             // 
             // buttonAddEmployee
             // 
@@ -151,6 +184,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
             // 
+            // buttonDeleteSkill
+            // 
+            this.buttonDeleteSkill.Location = new System.Drawing.Point(21, 268);
+            this.buttonDeleteSkill.Name = "buttonDeleteSkill";
+            this.buttonDeleteSkill.Size = new System.Drawing.Size(75, 23);
+            this.buttonDeleteSkill.TabIndex = 7;
+            this.buttonDeleteSkill.Text = "удалить";
+            this.buttonDeleteSkill.UseVisualStyleBackColor = true;
+            this.buttonDeleteSkill.Click += new System.EventHandler(this.buttonDeleteSkill_Click);
+            // 
             // buttonAddSkills
             // 
             this.buttonAddSkills.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -179,56 +222,14 @@
             this.splitContainer1.SplitterDistance = 277;
             this.splitContainer1.TabIndex = 7;
             // 
-            // buttonDeleteEmployee
-            // 
-            this.buttonDeleteEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonDeleteEmployee.Location = new System.Drawing.Point(42, 260);
-            this.buttonDeleteEmployee.Name = "buttonDeleteEmployee";
-            this.buttonDeleteEmployee.Size = new System.Drawing.Size(61, 27);
-            this.buttonDeleteEmployee.TabIndex = 7;
-            this.buttonDeleteEmployee.Text = "удалить";
-            this.buttonDeleteEmployee.UseVisualStyleBackColor = true;
-            this.buttonDeleteEmployee.Click += new System.EventHandler(this.buttonDeleteEmployee_Click);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(158, 288);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(111, 13);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Добавить/изменить";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.LinkColor = System.Drawing.Color.Black;
-            this.linkLabel1.Location = new System.Drawing.Point(39, 231);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(215, 13);
-            this.linkLabel1.TabIndex = 9;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "*Двойной щелчок для снятия выделения";
-            // 
-            // buttonDeleteSkill
-            // 
-            this.buttonDeleteSkill.Location = new System.Drawing.Point(21, 268);
-            this.buttonDeleteSkill.Name = "buttonDeleteSkill";
-            this.buttonDeleteSkill.Size = new System.Drawing.Size(75, 23);
-            this.buttonDeleteSkill.TabIndex = 7;
-            this.buttonDeleteSkill.Text = "удалить";
-            this.buttonDeleteSkill.UseVisualStyleBackColor = true;
-            this.buttonDeleteSkill.Click += new System.EventHandler(this.buttonDeleteSkill_Click);
-            // 
-            // Form1
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(496, 312);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "Form1";
+            this.Name = "FormMain";
+            this.Text = "FormMain";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

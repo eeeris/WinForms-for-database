@@ -332,7 +332,7 @@
             this.ClientSize = new System.Drawing.Size(829, 487);
             this.Controls.Add(this.splitContainer1);
             this.Name = "FormEmployee";
-            this.Text = "Form2";
+            this.Text = "FormEmployee";
             this.Shown += new System.EventHandler(this.Form2_Shown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

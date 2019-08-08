@@ -123,7 +123,7 @@
             this.Controls.Add(this.textBoxAddNewSkill);
             this.Controls.Add(this.groupBox1);
             this.Name = "FormSkill";
-            this.Text = "Form3";
+            this.Text = "FormSkill";
             this.Load += new System.EventHandler(this.FormSkill_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
