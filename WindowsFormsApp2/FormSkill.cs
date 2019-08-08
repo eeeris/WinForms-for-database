@@ -86,6 +86,7 @@ namespace TestTask
         {
             Form ifrm = new FormEmployee();
             ifrm.ShowDialog();
+            Update_checkedListBoxEmployee();
         }
     }
 }
