@@ -17,20 +17,14 @@ namespace TestTask
         public FormMain()
         {
             InitializeComponent();
-
         }
 
-         
+
 
         private void Form1_Load(object sender, EventArgs e)
-
         {
-            
-            {
-                UpdateEmployeesList();
-                UpdateSkillsList();
-            }
-
+            UpdateEmployeesList();
+            UpdateSkillsList();
         }
 
 
@@ -40,7 +34,6 @@ namespace TestTask
             listEmployee.Items.Clear();
 
             foreach (var employee in DataProvider.GetEmployee(listSkills.SelectedItem as skill, textFilterSecondName.Text))
-
             {
                 listEmployee.Items.Add(employee);
             }
@@ -62,7 +55,6 @@ namespace TestTask
 
         private void ButtonAddEmployee_Click(object sender, EventArgs e)
         {
-            
             var ifrm = new FormEmployee();
             ifrm.ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;//тип изменен
           
@@ -74,9 +66,9 @@ namespace TestTask
         }
 
 
+
         private void ButtonAddSkill_Click(object sender, EventArgs e)
         {
-
             Form ifrm = new FormSkill();
             ifrm.ShowDialog();
             {
@@ -84,6 +76,8 @@ namespace TestTask
                 UpdateSkillsList();
             }
         }
+
+
 
         private void buttonDeleteEmployee_Click(object sender, EventArgs e)
         {
@@ -99,12 +93,13 @@ namespace TestTask
             if (result == DialogResult.Yes && listEmployee.SelectedItem != null)
             {
                 DataProvider.DaleteEmployee(listEmployee.SelectedItem as employee);
-
             }
+
             listEmployee.SelectedItem = null;
             UpdateEmployeesList();
             UpdateSkillsList();
         }
+
 
 
         private void buttonDeleteSkill_Click(object sender, EventArgs e)
@@ -118,20 +113,21 @@ namespace TestTask
                 MessageBoxDefaultButton.Button2
              );
             if (result == DialogResult.Yes && listSkills.SelectedItem != null)
-                {
+            {
                 DataProvider.DaleteSkill(listSkills.SelectedItem as skill);
-                }
-                
+            }
             listSkills.SelectedItem = null;
             UpdateEmployeesList();
             UpdateSkillsList();
         }
         
 
+
         private void listEmployee_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             listEmployee.SelectedItem = null;
         }
+
 
 
         private void listSkills_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -143,32 +139,29 @@ namespace TestTask
 
         private void textFilterSecondName_TextChanged(object sender, EventArgs e)
         {
-                UpdateEmployeesList();
+            UpdateEmployeesList();
         }
 
 
 
         private void textFilterSkillName_TextChanged(object sender, EventArgs e)
         {
-                UpdateSkillsList();
+            UpdateSkillsList();
         }
 
 
 
         private void listSkills_SelectedValueChanged(object sender, EventArgs e)
         {
-                UpdateEmployeesList();
+            UpdateEmployeesList();
         }
 
 
 
         private void listEmployees_SelectedValueChanged(object sender, EventArgs e)
         {
-                UpdateSkillsList();
+            UpdateSkillsList();
         }
-
-
-
     }
 }
 

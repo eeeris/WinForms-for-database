@@ -28,27 +28,6 @@ namespace TestTask
             {
                 checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
             }
-
-            /*using (var db = Program.OpenConnection())
-
-            {
-                var sortedSkills = from s in db.skill
-                                   orderby s.skill_name
-                                   select s;
-
-
-                foreach (var skill in sortedSkills)
-                {
-                    try
-                    {
-                        var em = db.employee.Where(x => x.employee_id == ChangingEmployee.employee_id).Single();
-                        bool isLinkedWithEmployee = em.ps.Any(x => x.skill == skill);//"Доступ к ликвидированному объекту невозможен.
-                        checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
-                    }
-                    catch
-                    { checkedListBoxSkills.Items.Add(skill); }
-
-                }*/
         }
 
 
@@ -57,6 +36,7 @@ namespace TestTask
         {
             get; set;
         }
+
 
 
         private void UpdateUI()
@@ -83,9 +63,13 @@ namespace TestTask
                 if (ChangingEmployee.date_of_birth.HasValue)
                 {
                     try
-                        { dateOfBirth.Value = ChangingEmployee.date_of_birth.Value;
-                        dateOfBirth.Checked = true; }
-                    catch { }
+                    {
+                        dateOfBirth.Value = ChangingEmployee.date_of_birth.Value;
+                        dateOfBirth.Checked = true;
+                    }
+                    catch
+                    {
+                    }
                 }
                 else
                 {
@@ -115,17 +99,6 @@ namespace TestTask
             }
             else
             {
-                /*using (var db = Program.OpenConnection())
-                {
-                    var employees = db.employee;
-
-                    if (ChangingEmployee.employee_id != 0)
-                    {
-                        ChangingEmployee = db.employee.First(x => x.employee_id == ChangingEmployee.employee_id);
-                    }*/
-
-                //*DataProvider.ChangeEmployee(ChangingEmployee);
-
                 Action<employee> setter = (changingEmployee) =>
                 {
                     changingEmployee.second_name = textSecondName.Text;
@@ -145,49 +118,13 @@ namespace TestTask
                     changingEmployee.mail = textMail.Text;
                 };
 
-                //var skillsIDs = checkedListBoxSkills.CheckedItems.Cast<Mapping.skill>().Select(x => x.skill_id);
                 var skills = Enumerable.Range(0, checkedListBoxSkills.Items.Count).Select(i => ((checkedListBoxSkills.Items[i] as skill).skill_id, checkedListBoxSkills.GetItemChecked(i)));
 
                 DataProvider.AddOrChangeEmployee(ChangingEmployee.employee_id, skills, setter);
                 Close();
-
-                /*if (ChangingEmployee.employee_id == 0)
-                {
-                    employees.InsertOnSubmit(ChangingEmployee);
-                    db.SubmitChanges();
-                }
-
-                for (int i = 0; i < checkedListBoxSkills.Items.Count; i++)
-                {
-                    var skill = checkedListBoxSkills.Items[i] as Mapping.skill;
-
-                    var association = ChangingEmployee.ps.FirstOrDefault(x => x.skill.skill_id == skill.skill_id);// потерян экземпляр
-
-                    if (checkedListBoxSkills.GetItemChecked(i) == true && association == null)
-                    {
-                        association = new Mapping.ps { person_id = ChangingEmployee.employee_id, skills_id = skill.skill_id };
-
-                        ChangingEmployee.ps.Add(association);
-                        skill.ps.Add(association);
-
-                        db.ps.InsertOnSubmit(association);
-
-                    }
-                    else if (checkedListBoxSkills.GetItemChecked(i) == false && association != null)
-                    {
-
-                        db.ps.DeleteOnSubmit(association);
-
-                    }
-                }
-
-                db.SubmitChanges();*/
             }
-
-            
-
-
         }
+
 
 
         private void ButtonAddSkill_Click(object sender, EventArgs e)
@@ -203,7 +140,6 @@ namespace TestTask
         {
             if (ChangingEmployee == null)
                 ChangingEmployee = new TestTask.Mapping.employee();
-
             UpdateSkillsList();
             UpdateUI();
         }

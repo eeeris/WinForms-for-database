@@ -19,11 +19,10 @@ namespace TestTask
         }
 
 
+
         private void Form3_Load(object sender, EventArgs e)
         {
-
-
-                Update_checkedListBoxEmployee();
+            Update_checkedListBoxEmployee();
         }
 
 
@@ -34,9 +33,11 @@ namespace TestTask
 
             foreach (var employees in DataProvider.UpdatecheckedListBoxEmployee())
             {
-                    checkedListBoxEmployee.Items.Add(employees);
+                checkedListBoxEmployee.Items.Add(employees);
             }
         }
+
+
 
         public TestTask.Mapping.skill addNewSkill
         {
@@ -47,69 +48,44 @@ namespace TestTask
 
         private void buttonAddSkill_Click(object sender, EventArgs e)
         {
-
             addNewSkill = new TestTask.Mapping.skill();
             addNewSkill.skill_name = textBoxAddNewSkill.Text;
-            using (var db = Program.OpenConnection())
 
-            //{
-            //var sk = db.skill.FirstOrDefault(x => x.skill_name == addNewSkill.skill_name);
             if (String.IsNullOrEmpty(addNewSkill.skill_name))
             {
-                    MessageBox.Show(
+                MessageBox.Show
+                    (
                     "ввведите название навыка",
                     "Пустое значение",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                    MessageBoxIcon.Warning
+                    );
             }
-            else if (DataProvider.AddNewSkillSupporting(addNewSkill) != null)
+            else if (DataProvider.FindAndExcludeDuplicateSkill(addNewSkill) != null)
             {
-                    MessageBox.Show(
+                MessageBox.Show
+                    (
                     "Этот навык уже добавлен в базу!",
                     "существующее значение",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                    MessageBoxIcon.Warning
+                    );
             }
             else
             {
-                    var employeeIDs = checkedListBoxEmployee.CheckedItems.Cast<Mapping.employee>().Select(x => x.employee_id);
-                    DataProvider.AddNewSkillAndLinkWithEmployee(addNewSkill, employeeIDs);
-                    Close();
-                    /*db.skill.InsertOnSubmit(addNewSkill);
-
-                    foreach (var employee in checkedListBoxEmployee.CheckedItems.Cast<Mapping.employee>())
-                    {
-                        bool isLinkedWithEmployee = addNewSkill.ps.Any(x => x.employee == employee);
-
-                        if (isLinkedWithEmployee == false)
-                        {
-                            var ps = new Mapping.ps { skills_id = addNewSkill.skill_id, person_id = employee.employee_id };
-
-                            addNewSkill.ps.Add(ps);
-                            employee.ps.Add(ps);
-
-                            db.ps.InsertOnSubmit(ps);
-
-                        }
-                    }
-
-                    db.SubmitChanges();
-                    */
-                }
+                var employeeIDs = checkedListBoxEmployee.CheckedItems.Cast<Mapping.employee>().Select(x => x.employee_id);
+                DataProvider.AddNewSkillAndLinkWithEmployee(addNewSkill, employeeIDs);
+                Close();
+            }
             
         }
-    
 
 
 
         private void ButtonNewEmployee_Click(object sender, EventArgs e)
         {
-
             Form ifrm = new FormEmployee();
             ifrm.ShowDialog();
-            //Update_checkedListBoxEmployee();
-            
         }
-
     }
 }

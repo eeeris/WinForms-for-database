@@ -26,6 +26,8 @@ namespace TestTask
             }
         }
 
+
+
         public static IEnumerable<skill> GetSkill(employee selectedEmployee, string skillName)
         {
             using (var db = Program.OpenConnection())
@@ -37,10 +39,10 @@ namespace TestTask
                                    orderby s.skill_name
                                    select s;
                 return sortedSkills.ToList();
-
-
             }
         }
+
+
 
         public static void DaleteEmployee(employee selectedEmployee)
         {
@@ -48,9 +50,7 @@ namespace TestTask
             {
 
                 {
-
                     var ChangingEmployee = selectedEmployee as TestTask.Mapping.employee;
-
                     var em = db.employee.Where(x => x.employee_id == ChangingEmployee.employee_id).Single();
 
                     db.employee.DeleteOnSubmit(em);
@@ -72,9 +72,7 @@ namespace TestTask
             using (var db = Program.OpenConnection())
             {
                 {
-
                     var ChangingSkill = selectedSkill as TestTask.Mapping.skill;
-
                     var sk = db.skill.Where(x => x.skill_id == ChangingSkill.skill_id).Single();
 
                     db.skill.DeleteOnSubmit(sk);
@@ -83,16 +81,14 @@ namespace TestTask
                                            where ps.skills_id == sk.skill_id
                                            select ps;
 
-
                     db.ps.DeleteAllOnSubmit(deleteSelectedPs);
                 }
                 db.SubmitChanges();
             }
-
         }
 
 
-        
+
         public static IEnumerable<(skill, bool)> UpdateCheckedListBoxSkills(employee changingEmployee)
         {
             using (var db = Program.OpenConnection())
@@ -109,7 +105,7 @@ namespace TestTask
                     try
                     {
                         var em = db.employee.Where(x => x.employee_id == changingEmployee.employee_id).Single();
-                        isLinkedWithEmployee = em.ps.Any(x => x.skill == skill);//"Доступ к ликвидированному объекту невозможен.
+                        isLinkedWithEmployee = em.ps.Any(x => x.skill == skill);
                     }
                     catch
                     {
@@ -117,22 +113,6 @@ namespace TestTask
 
                     yield return (skill, isLinkedWithEmployee);
                 }
-            }
-        }
-
-
-        public static long ChangeEmployee(employee employeeToAdd)
-        {
-            using (var db = Program.OpenConnection())
-            {
-                var employees = db.employee;
-
-                if (employeeToAdd.employee_id != 0)
-                {
-                    employeeToAdd = db.employee.First(x => x.employee_id == employeeToAdd.employee_id);
-                    return employeeToAdd.employee_id;
-                }
-                return 0;
             }
         }
 
@@ -161,11 +141,10 @@ namespace TestTask
 
                 foreach (var skill in skillsIds)
                 {
-                    //bool isLinkedWithSkill = employeeToAdd.ps.FirstOrDefault(x => x.skill.skill_id == skill.id);
-                    var association = employeeToAdd.ps.FirstOrDefault(x => x.skill.skill_id == skill.id);// потерян экземпляр
+                    var association = employeeToAdd.ps.FirstOrDefault(x => x.skill.skill_id == skill.id);
                     if (association == null && skill.enabled)
                     {
-                        var ps = new Mapping.ps { person_id = employeeToAdd.employee_id, skills_id = skill.id };// attention
+                        var ps = new Mapping.ps { person_id = employeeToAdd.employee_id, skills_id = skill.id };
                         db.ps.InsertOnSubmit(ps);
                     }
                     else if (association != null && !skill.enabled)
@@ -176,9 +155,7 @@ namespace TestTask
                 }
                 db.SubmitChanges();
             }
-
         }
-
 
 
 
@@ -194,15 +171,13 @@ namespace TestTask
         }
 
 
-        public static skill AddNewSkillSupporting(skill addNewSkill)
+
+        public static skill FindAndExcludeDuplicateSkill (skill addNewSkill)
         {
             using (var db = Program.OpenConnection())
-
             {
                 var sk = db.skill.FirstOrDefault(x => x.skill_name == addNewSkill.skill_name);
                 return sk;
-
-
             }
         }
 
@@ -224,13 +199,9 @@ namespace TestTask
                         db.ps.InsertOnSubmit(ps);
                     }
                 }
-
                 db.SubmitChanges();
             }
 
         }
-
-
-
     }
 }
