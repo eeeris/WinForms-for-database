@@ -112,7 +112,7 @@
             this.buttonAddSkill.UseVisualStyleBackColor = true;
             this.buttonAddSkill.Click += new System.EventHandler(this.buttonAddSkill_Click);
             // 
-            // Form3
+            // FormSkill
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -122,9 +122,9 @@
             this.Controls.Add(this.labelAddNewSkill);
             this.Controls.Add(this.textBoxAddNewSkill);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Form3";
+            this.Name = "FormSkill";
             this.Text = "Form3";
-            this.Load += new System.EventHandler(this.Form3_Load);
+            this.Load += new System.EventHandler(this.FormSkill_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

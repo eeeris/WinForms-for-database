@@ -20,7 +20,7 @@ namespace TestTask
 
 
 
-        private void Form3_Load(object sender, EventArgs e)
+        private void FormSkill_Load(object sender, EventArgs e)
         {
             Update_checkedListBoxEmployee();
         }
