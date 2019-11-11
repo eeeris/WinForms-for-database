@@ -99,7 +99,6 @@
             this.groupBox1.Size = new System.Drawing.Size(347, 246);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
             // 
             // buttonAddSkill
             // 
@@ -123,7 +122,7 @@
             this.Controls.Add(this.textBoxAddNewSkill);
             this.Controls.Add(this.groupBox1);
             this.Name = "FormSkill";
-            this.Text = "FormSkill";
+            this.Text = "Навыки";
             this.Load += new System.EventHandler(this.FormSkill_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);

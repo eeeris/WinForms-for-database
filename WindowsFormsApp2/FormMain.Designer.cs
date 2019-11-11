@@ -86,7 +86,6 @@
             this.groupBox1.Size = new System.Drawing.Size(275, 309);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
             // 
             // linkLabel1
             // 
@@ -182,7 +181,6 @@
             this.groupBox2.Size = new System.Drawing.Size(209, 312);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
             // 
             // buttonDeleteSkill
             // 
@@ -229,7 +227,7 @@
             this.ClientSize = new System.Drawing.Size(496, 312);
             this.Controls.Add(this.splitContainer1);
             this.Name = "FormMain";
-            this.Text = "FormMain";
+            this.Text = "Сотрудники и их навыки";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
