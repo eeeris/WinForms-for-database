@@ -62,7 +62,7 @@
             // labelSecondName
             // 
             this.labelSecondName.AutoSize = true;
-            this.labelSecondName.Location = new System.Drawing.Point(55, 53);
+            this.labelSecondName.Location = new System.Drawing.Point(55, 47);
             this.labelSecondName.Name = "labelSecondName";
             this.labelSecondName.Size = new System.Drawing.Size(60, 13);
             this.labelSecondName.TabIndex = 0;
@@ -71,7 +71,7 @@
             // labelFirstName
             // 
             this.labelFirstName.AutoSize = true;
-            this.labelFirstName.Location = new System.Drawing.Point(55, 109);
+            this.labelFirstName.Location = new System.Drawing.Point(55, 103);
             this.labelFirstName.Name = "labelFirstName";
             this.labelFirstName.Size = new System.Drawing.Size(33, 13);
             this.labelFirstName.TabIndex = 1;
@@ -81,18 +81,18 @@
             // 
             this.textFirstName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textFirstName.Location = new System.Drawing.Point(58, 125);
+            this.textFirstName.Location = new System.Drawing.Point(58, 119);
             this.textFirstName.Name = "textFirstName";
-            this.textFirstName.Size = new System.Drawing.Size(237, 20);
+            this.textFirstName.Size = new System.Drawing.Size(211, 20);
             this.textFirstName.TabIndex = 2;
             // 
             // textSecondName
             // 
             this.textSecondName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textSecondName.Location = new System.Drawing.Point(58, 69);
+            this.textSecondName.Location = new System.Drawing.Point(58, 63);
             this.textSecondName.Name = "textSecondName";
-            this.textSecondName.Size = new System.Drawing.Size(237, 20);
+            this.textSecondName.Size = new System.Drawing.Size(211, 20);
             this.textSecondName.TabIndex = 1;
             // 
             // labelSkills
@@ -121,13 +121,13 @@
             this.checkedListBoxSkills.FormattingEnabled = true;
             this.checkedListBoxSkills.Location = new System.Drawing.Point(55, 244);
             this.checkedListBoxSkills.Name = "checkedListBoxSkills";
-            this.checkedListBoxSkills.Size = new System.Drawing.Size(232, 139);
+            this.checkedListBoxSkills.Size = new System.Drawing.Size(214, 124);
             this.checkedListBoxSkills.TabIndex = 5;
             // 
             // labelPosition
             // 
             this.labelPosition.AutoSize = true;
-            this.labelPosition.Location = new System.Drawing.Point(55, 165);
+            this.labelPosition.Location = new System.Drawing.Point(55, 159);
             this.labelPosition.Name = "labelPosition";
             this.labelPosition.Size = new System.Drawing.Size(69, 13);
             this.labelPosition.TabIndex = 9;
@@ -137,9 +137,9 @@
             // 
             this.textPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textPosition.Location = new System.Drawing.Point(58, 181);
+            this.textPosition.Location = new System.Drawing.Point(55, 175);
             this.textPosition.Name = "textPosition";
-            this.textPosition.Size = new System.Drawing.Size(237, 20);
+            this.textPosition.Size = new System.Drawing.Size(214, 20);
             this.textPosition.TabIndex = 3;
             // 
             // labelEducation
@@ -157,7 +157,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textEducation.Location = new System.Drawing.Point(33, 63);
             this.textEducation.Name = "textEducation";
-            this.textEducation.Size = new System.Drawing.Size(228, 20);
+            this.textEducation.Size = new System.Drawing.Size(212, 20);
             this.textEducation.TabIndex = 6;
             // 
             // labelDateOfBirth
@@ -172,7 +172,7 @@
             // labelAddress
             // 
             this.labelAddress.AutoSize = true;
-            this.labelAddress.Location = new System.Drawing.Point(32, 159);
+            this.labelAddress.Location = new System.Drawing.Point(30, 159);
             this.labelAddress.Name = "labelAddress";
             this.labelAddress.Size = new System.Drawing.Size(38, 13);
             this.labelAddress.TabIndex = 16;
@@ -184,13 +184,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textAddress.Location = new System.Drawing.Point(33, 175);
             this.textAddress.Name = "textAddress";
-            this.textAddress.Size = new System.Drawing.Size(226, 20);
+            this.textAddress.Size = new System.Drawing.Size(212, 20);
             this.textAddress.TabIndex = 8;
             // 
             // labelPassportNumber
             // 
             this.labelPassportNumber.AutoSize = true;
-            this.labelPassportNumber.Location = new System.Drawing.Point(27, 228);
+            this.labelPassportNumber.Location = new System.Drawing.Point(32, 218);
             this.labelPassportNumber.Name = "labelPassportNumber";
             this.labelPassportNumber.Size = new System.Drawing.Size(196, 13);
             this.labelPassportNumber.TabIndex = 18;
@@ -200,15 +200,15 @@
             // 
             this.textPassportNumber.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textPassportNumber.Location = new System.Drawing.Point(33, 244);
+            this.textPassportNumber.Location = new System.Drawing.Point(35, 234);
             this.textPassportNumber.Name = "textPassportNumber";
-            this.textPassportNumber.Size = new System.Drawing.Size(226, 20);
+            this.textPassportNumber.Size = new System.Drawing.Size(212, 20);
             this.textPassportNumber.TabIndex = 9;
             // 
             // labelPhoneNumber
             // 
             this.labelPhoneNumber.AutoSize = true;
-            this.labelPhoneNumber.Location = new System.Drawing.Point(30, 285);
+            this.labelPhoneNumber.Location = new System.Drawing.Point(30, 276);
             this.labelPhoneNumber.Name = "labelPhoneNumber";
             this.labelPhoneNumber.Size = new System.Drawing.Size(93, 13);
             this.labelPhoneNumber.TabIndex = 20;
@@ -218,15 +218,15 @@
             // 
             this.textPhoneNumber.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textPhoneNumber.Location = new System.Drawing.Point(33, 301);
+            this.textPhoneNumber.Location = new System.Drawing.Point(33, 292);
             this.textPhoneNumber.Name = "textPhoneNumber";
-            this.textPhoneNumber.Size = new System.Drawing.Size(226, 20);
+            this.textPhoneNumber.Size = new System.Drawing.Size(214, 20);
             this.textPhoneNumber.TabIndex = 10;
             // 
             // labelMail
             // 
             this.labelMail.AutoSize = true;
-            this.labelMail.Location = new System.Drawing.Point(32, 347);
+            this.labelMail.Location = new System.Drawing.Point(32, 330);
             this.labelMail.Name = "labelMail";
             this.labelMail.Size = new System.Drawing.Size(26, 13);
             this.labelMail.TabIndex = 22;
@@ -236,25 +236,26 @@
             // 
             this.textMail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textMail.Location = new System.Drawing.Point(35, 363);
+            this.textMail.Location = new System.Drawing.Point(33, 348);
             this.textMail.Name = "textMail";
-            this.textMail.Size = new System.Drawing.Size(226, 20);
+            this.textMail.Size = new System.Drawing.Size(214, 20);
             this.textMail.TabIndex = 11;
             // 
             // buttonAddSkill
             // 
             this.buttonAddSkill.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddSkill.Location = new System.Drawing.Point(298, 244);
+            this.buttonAddSkill.Location = new System.Drawing.Point(240, 223);
             this.buttonAddSkill.Name = "buttonAddSkill";
-            this.buttonAddSkill.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddSkill.Size = new System.Drawing.Size(29, 23);
             this.buttonAddSkill.TabIndex = 24;
-            this.buttonAddSkill.Text = "Новый ";
+            this.buttonAddSkill.Text = "+";
             this.buttonAddSkill.UseVisualStyleBackColor = true;
             this.buttonAddSkill.Click += new System.EventHandler(this.ButtonAddSkill_Click);
             // 
             // buttonAddEmployee
             // 
-            this.buttonAddEmployee.Location = new System.Drawing.Point(183, 421);
+            this.buttonAddEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEmployee.Location = new System.Drawing.Point(172, 388);
             this.buttonAddEmployee.Name = "buttonAddEmployee";
             this.buttonAddEmployee.Size = new System.Drawing.Size(75, 23);
             this.buttonAddEmployee.TabIndex = 25;
@@ -271,7 +272,7 @@
             this.dateOfBirth.MinDate = new System.DateTime(1920, 1, 1, 0, 0, 0, 0);
             this.dateOfBirth.Name = "dateOfBirth";
             this.dateOfBirth.ShowCheckBox = true;
-            this.dateOfBirth.Size = new System.Drawing.Size(226, 20);
+            this.dateOfBirth.Size = new System.Drawing.Size(212, 20);
             this.dateOfBirth.TabIndex = 7;
             this.dateOfBirth.Value = new System.DateTime(2019, 6, 10, 0, 0, 0, 0);
             // 
@@ -321,16 +322,17 @@
             this.splitContainer1.Panel2.Controls.Add(this.textPassportNumber);
             this.splitContainer1.Panel2.Controls.Add(this.labelPhoneNumber);
             this.splitContainer1.Panel2.Controls.Add(this.textEducation);
-            this.splitContainer1.Size = new System.Drawing.Size(824, 479);
-            this.splitContainer1.SplitterDistance = 413;
+            this.splitContainer1.Size = new System.Drawing.Size(628, 421);
+            this.splitContainer1.SplitterDistance = 314;
             this.splitContainer1.TabIndex = 26;
             // 
             // FormEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(829, 487);
+            this.ClientSize = new System.Drawing.Size(633, 429);
             this.Controls.Add(this.splitContainer1);
+            this.MinimumSize = new System.Drawing.Size(540, 468);
             this.Name = "FormEmployee";
             this.Text = "Сотрудники";
             this.Shown += new System.EventHandler(this.Form2_Shown);

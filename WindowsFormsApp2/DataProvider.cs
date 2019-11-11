@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using TestTask.Mapping;
 
@@ -44,19 +42,17 @@ namespace TestTask
 
 
 
-        public static void DaleteEmployee(employee selectedEmployee)
+        public static void DeleteEmployee(long selectedEmployeeId)
         {
             using (var db = Program.OpenConnection())
             {
-
                 {
-                    var ChangingEmployee = selectedEmployee as TestTask.Mapping.employee;
-                    var em = db.employee.Where(x => x.employee_id == ChangingEmployee.employee_id).Single();
+                    var employee = db.employee.Where(x => x.employee_id == selectedEmployeeId).Single();
 
-                    db.employee.DeleteOnSubmit(em);
+                    db.employee.DeleteOnSubmit(employee);
 
                     var deleteSelectedPs = from ps in db.ps
-                                           where ps.person_id == em.employee_id
+                                           where ps.person_id == employee.employee_id
                                            select ps;
 
                     db.ps.DeleteAllOnSubmit(deleteSelectedPs);
@@ -67,13 +63,12 @@ namespace TestTask
 
 
 
-        public static void DaleteSkill(skill selectedSkill)
+        public static void DeleteSkill(long selectedSkillId)
         {
             using (var db = Program.OpenConnection())
             {
                 {
-                    var ChangingSkill = selectedSkill as TestTask.Mapping.skill;
-                    var sk = db.skill.Where(x => x.skill_id == ChangingSkill.skill_id).Single();
+                    var sk = db.skill.Where(x => x.skill_id == selectedSkillId).Single();
 
                     db.skill.DeleteOnSubmit(sk);
 
@@ -89,7 +84,7 @@ namespace TestTask
 
 
 
-        public static IEnumerable<(skill, bool)> UpdateCheckedListBoxSkills(employee changingEmployee)
+        public static IEnumerable<(skill, bool)> UpdateCheckedListBoxSkills(long changingEmployeeId)
         {
             using (var db = Program.OpenConnection())
 
@@ -104,7 +99,7 @@ namespace TestTask
                     bool isLinkedWithEmployee = false;
                     try
                     {
-                        var em = db.employee.Where(x => x.employee_id == changingEmployee.employee_id).Single();
+                        var em = db.employee.Where(x => x.employee_id == changingEmployeeId).Single();
                         isLinkedWithEmployee = em.ps.Any(x => x.skill == skill);
                     }
                     catch
@@ -172,11 +167,11 @@ namespace TestTask
 
 
 
-        public static skill FindAndExcludeDuplicateSkill (skill addNewSkill)
+        public static skill FindAndExcludeDuplicateSkill (string skillName)
         {
             using (var db = Program.OpenConnection())
             {
-                var sk = db.skill.FirstOrDefault(x => x.skill_name == addNewSkill.skill_name);
+                var sk = db.skill.FirstOrDefault(x => x.skill_name == skillName);
                 return sk;
             }
         }
@@ -195,7 +190,7 @@ namespace TestTask
                     bool isLinkedWithEmployee = skillToAdd.ps.Any(x => x.employee.employee_id == employeeId);
                     if (isLinkedWithEmployee == false)
                     {
-                        var ps = new Mapping.ps { skills_id = skillToAdd.skill_id, person_id = employeeId };
+                        var ps = new ps { skills_id = skillToAdd.skill_id, person_id = employeeId };
                         db.ps.InsertOnSubmit(ps);
                     }
                 }

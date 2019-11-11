@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestTask.Mapping;
+
 
 namespace TestTask
 {
@@ -19,24 +16,21 @@ namespace TestTask
         }
 
 
-
         private void UpdateSkillsList()
         {
             checkedListBoxSkills.Items.Clear();
 
-            foreach ((skill skill, bool isLinkedWithEmployee) in DataProvider.UpdateCheckedListBoxSkills(ChangingEmployee))
+            foreach ((skill skill, bool isLinkedWithEmployee) in DataProvider.UpdateCheckedListBoxSkills(ChangingEmployee.employee_id))
             {
                 checkedListBoxSkills.Items.Add(skill, isLinkedWithEmployee);
             }
         }
 
 
-
-        public TestTask.Mapping.employee ChangingEmployee
+        public employee ChangingEmployee
         {
             get; set;
         }
-
 
 
         private void UpdateUI()
@@ -84,7 +78,6 @@ namespace TestTask
         }
 
 
-
         private void ButtonAddEmployee_Click(object sender, EventArgs e)
         {
 
@@ -126,7 +119,6 @@ namespace TestTask
         }
 
 
-
         private void ButtonAddSkill_Click(object sender, EventArgs e)
         {
             Form ifrm = new FormSkill();
@@ -135,11 +127,13 @@ namespace TestTask
         }
 
 
-
         private void Form2_Shown(object sender, EventArgs e)
         {
             if (ChangingEmployee == null)
-                ChangingEmployee = new TestTask.Mapping.employee();
+                ChangingEmployee = new employee();
+
+            dateOfBirth.MaxDate = DateTime.Now;
+
             UpdateSkillsList();
             UpdateUI();
         }

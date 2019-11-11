@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.Linq;
+
 
 namespace TestTask
 {
@@ -19,12 +15,10 @@ namespace TestTask
         }
 
 
-
         private void FormSkill_Load(object sender, EventArgs e)
         {
             Update_checkedListBoxEmployee();
         }
-
 
 
         private void Update_checkedListBoxEmployee()
@@ -38,17 +32,15 @@ namespace TestTask
         }
 
 
-
-        public TestTask.Mapping.skill addNewSkill
+        public Mapping.skill addNewSkill
         {
             get; set;
         }
 
 
-
         private void buttonAddSkill_Click(object sender, EventArgs e)
         {
-            addNewSkill = new TestTask.Mapping.skill();
+            addNewSkill = new Mapping.skill();
             addNewSkill.skill_name = textBoxAddNewSkill.Text;
 
             if (String.IsNullOrEmpty(addNewSkill.skill_name))
@@ -61,7 +53,7 @@ namespace TestTask
                     MessageBoxIcon.Warning
                     );
             }
-            else if (DataProvider.FindAndExcludeDuplicateSkill(addNewSkill) != null)
+            else if (DataProvider.FindAndExcludeDuplicateSkill(addNewSkill.skill_name) != null)
             {
                 MessageBox.Show
                     (
@@ -79,7 +71,6 @@ namespace TestTask
             }
             
         }
-
 
 
         private void ButtonNewEmployee_Click(object sender, EventArgs e)

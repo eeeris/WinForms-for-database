@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using TestTask.Mapping;
+
 
 namespace TestTask
 {
@@ -20,13 +15,11 @@ namespace TestTask
         }
 
 
-
         private void Form1_Load(object sender, EventArgs e)
         {
             UpdateEmployeesList();
             UpdateSkillsList();
         }
-
 
 
         private void UpdateEmployeesList()
@@ -40,7 +33,6 @@ namespace TestTask
         }
 
 
-
         private void UpdateSkillsList()
         {
             listSkills.Items.Clear();
@@ -52,11 +44,10 @@ namespace TestTask
         }
 
 
-
         private void ButtonAddEmployee_Click(object sender, EventArgs e)
         {
             var ifrm = new FormEmployee();
-            ifrm.ChangingEmployee = listEmployee.SelectedItem as TestTask.Mapping.employee;//тип изменен
+            ifrm.ChangingEmployee = listEmployee.SelectedItem as employee;
           
             ifrm.ShowDialog();
             {
@@ -64,7 +55,6 @@ namespace TestTask
                 UpdateSkillsList();
             }
         }
-
 
 
         private void ButtonAddSkill_Click(object sender, EventArgs e)
@@ -78,28 +68,26 @@ namespace TestTask
         }
 
 
-
         private void buttonDeleteEmployee_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show
-                (
+            (
                 "Все данные о сотруднике будут удалены. Удалить?",
                 "Удаление информации о сотруднике",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button2
-                );
+            );
 
-            if (result == DialogResult.Yes && listEmployee.SelectedItem != null)
+            if (result == DialogResult.Yes && listEmployee.SelectedItem as employee != null)
             {
-                DataProvider.DaleteEmployee(listEmployee.SelectedItem as employee);
+                DataProvider.DeleteEmployee(((employee)listEmployee.SelectedItem).employee_id);
             }
 
             listEmployee.SelectedItem = null;
             UpdateEmployeesList();
             UpdateSkillsList();
         }
-
 
 
         private void buttonDeleteSkill_Click(object sender, EventArgs e)
@@ -111,23 +99,23 @@ namespace TestTask
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button2
-             );
-            if (result == DialogResult.Yes && listSkills.SelectedItem != null)
+            );
+
+            if (result == DialogResult.Yes && listSkills.SelectedItem as skill != null)
             {
-                DataProvider.DaleteSkill(listSkills.SelectedItem as skill);
+                DataProvider.DeleteSkill(((skill)listSkills.SelectedItem).skill_id);
             }
+
             listSkills.SelectedItem = null;
             UpdateEmployeesList();
             UpdateSkillsList();
         }
         
 
-
         private void listEmployee_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             listEmployee.SelectedItem = null;
         }
-
 
 
         private void listSkills_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -136,12 +124,10 @@ namespace TestTask
         }
 
 
-
         private void textFilterSecondName_TextChanged(object sender, EventArgs e)
         {
             UpdateEmployeesList();
         }
-
 
 
         private void textFilterSkillName_TextChanged(object sender, EventArgs e)
@@ -150,12 +136,10 @@ namespace TestTask
         }
 
 
-
         private void listSkills_SelectedValueChanged(object sender, EventArgs e)
         {
             UpdateEmployeesList();
         }
-
 
 
         private void listEmployees_SelectedValueChanged(object sender, EventArgs e)
